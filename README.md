@@ -1,2 +1,3 @@
 # getActualClientRect
-get actual client rect with transforms; a reverse-engineering of getBoundingClientRect()
+
+get actual client rect with transform; a reverse-engineering of getBoundingClientRect()

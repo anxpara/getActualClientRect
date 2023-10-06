@@ -1,0 +1,52 @@
+{
+  "name": "actual-client-rect",
+  "version": "0.0.1",
+  "description": "gets an element's actual client rect with transform",
+  "sideEffects": false,
+  "main": "dist/cjs/getActualClientRect.js",
+  "module": "dist/es/getActualClientRect.js",
+  "umd:main": "dist/umd/getActualClientRect.min.js",
+  "umd:name": "getActualClientRect",
+  "unpkg": "dist/umd/getActualClientRect.min.js",
+  "types": "dist/cjs/getActualClientRect.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "bash build.bsh",
+    "watch": "pm2 start pm2.config.js --only getActualClientRect-watcher"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anxpara/getActualClientRect.git"
+  },
+  "keywords": [
+    "actual client rect",
+    "getActualClientRect",
+    "getBoundingClientRect",
+    "getACR",
+    "getBCR",
+    "dom projection",
+    "flip"
+  ],
+  "author": "anxpara anx@anxpara.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anxpara/getActualClientRect/issues"
+  },
+  "homepage": "https://github.com/anxpara/getActualClientRect#readme",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "pm2": "^5.2.0",
+    "rollup": "^3.7.4",
+    "rollup-plugin-dts": "^5.0.0",
+    "sass": "^1.54.0",
+    "terser": "^5.14.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "gl-matrix": "^3.4.3"
+  }
+}

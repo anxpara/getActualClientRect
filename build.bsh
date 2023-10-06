@@ -1,0 +1,14 @@
+mkdir -p dist
+
+cp README.md dist/
+cp LICENSE dist/
+
+npx tsc --module commonjs --outdir dist/cjs
+
+npx tsc --module es6 --outdir dist/es
+
+rollup dist/es/getActualClientRect.js --file dist/umd/getActualClientRect.js --format umd --name getActualClientRect --plugin @rollup/plugin-node-resolve
+terser --ecma 6 --compress --mangle -o dist/umd/getActualClientRect.min.js -- dist/umd/getActualClientRect.js
+rm dist/umd/getActualClientRect.js
+
+rollup ./dist/es/getActualClientRect.d.ts --file dist/umd/getActualClientRect.min.d.ts --format umd --plugin ./node_modules/rollup-plugin-dts
