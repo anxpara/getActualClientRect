@@ -2,7 +2,7 @@ import type { ComponentType, SvelteComponent } from 'svelte';
 import type Matcher from '../components/Matcher.svelte';
 import { TestName } from './testNames';
 import Control from '../components/test-cases/Control.svelte';
-import SubPixelSize from '../components/test-cases/SubPixelSize.svelte';
+import SubPixel from '../components/test-cases/SubPixel.svelte';
 import Rotated from '../components/test-cases/Rotated.svelte';
 import ParentRotated from '../components/test-cases/ParentRotated.svelte';
 import TwoRotations from '../components/test-cases/TwoRotations.svelte';
@@ -24,9 +24,9 @@ export const controlTestCase: Test = {
   name: TestName.Control,
   testType: Control,
 };
-export const subPixelSizeTestCase: Test = {
-  name: TestName.SubPixelSize,
-  testType: SubPixelSize,
+export const subPixelTestCase: Test = {
+  name: TestName.SubPixel,
+  testType: SubPixel,
 };
 export const rotatedTestCase: Test = {
   name: TestName.Rotated,
@@ -43,7 +43,7 @@ export const twoRotationsTestCase: Test = {
 
 export const allTestCases = [
   controlTestCase,
-  subPixelSizeTestCase,
+  subPixelTestCase,
   rotatedTestCase,
   parentRotatedTestCase,
   twoRotationsTestCase,

@@ -1,6 +1,6 @@
 export const TestName = {
   Control: 'control',
-  SubPixelSize: 'sub-pixel-size',
+  SubPixel: 'sub-pixel',
   Rotated: 'rotated',
   ParentRotated: 'parent-rotated',
   TwoRotations: 'two-rotations',
