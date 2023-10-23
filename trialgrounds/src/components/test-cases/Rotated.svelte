@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TestName } from '../../data/testNames';
+  import { TestName } from '../../lib/testNames';
 
   let testElement: HTMLElement;
   export function getTestElement(): HTMLElement {

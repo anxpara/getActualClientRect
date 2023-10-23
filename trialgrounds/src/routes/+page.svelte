@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, tick } from 'svelte';
-  import { allTestCases } from '../data/testCases';
+  import { allTestCases } from '../lib/testCases';
   import Matcher from '../components/Matcher.svelte';
 
   onMount(async () => {

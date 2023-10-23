@@ -2,8 +2,8 @@
   import { page } from '$app/stores';
   import { onMount, tick } from 'svelte';
   import Matcher from '../../components/Matcher.svelte';
-  import { testCasesByName } from '../../data/testCases';
-  import type { TestName } from '../../data/testNames';
+  import { testCasesByName } from '../../lib/testCases';
+  import type { TestName } from '../../lib/testNames';
 
   let matcher: Matcher;
   $: test = testCasesByName.get($page.params.testName as TestName)!;
