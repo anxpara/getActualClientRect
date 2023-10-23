@@ -13,10 +13,6 @@ export default defineConfig({
       scss: {
         additionalData: '@use "src/variables.scss" as *;',
       },
-
-      sass: {
-        additionalData: '@use "src/variables.sass" as *',
-      },
     },
   },
 });

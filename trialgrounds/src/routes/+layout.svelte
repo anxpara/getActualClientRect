@@ -1,5 +1,4 @@
 <script lang="ts">
-  import '../app.sass';
   import '../app.scss';
 </script>
 
