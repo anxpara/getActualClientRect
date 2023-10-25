@@ -1,4 +1,4 @@
-export const TestName = {
+export const TrialName = {
   Control: 'control',
   SubPixel: 'sub-pixel',
   Relative: 'relative',
@@ -20,5 +20,5 @@ export const TestName = {
   Transforms3dComplicated: 'transforms-3d-complicated',
   TransformsPreserve3dComplicated: 'transforms-preserve-3d-complicated',
 } as const;
-export type TestName = (typeof TestName)[keyof typeof TestName];
-export const testNames: string[] = Object.values(TestName);
+export type TrialName = (typeof TrialName)[keyof typeof TrialName];
+export const trialNames: string[] = Object.values(TrialName);

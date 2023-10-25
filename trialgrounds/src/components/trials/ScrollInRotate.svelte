@@ -1,13 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { TestName } from '../../lib/testNames';
+  import { TrialName } from '../../lib/trialNames';
 
-  let testName = TestName.ScrollInRotate;
+  let trialName = TrialName.ScrollInRotate;
 
   let scroller: HTMLElement;
-  let testElement: HTMLElement;
-  export function getTestElement(): HTMLElement {
-    return testElement;
+  let trialElement: HTMLElement;
+  export function getTrialElement(): HTMLElement {
+    return trialElement;
   }
 
   onMount(() => {
@@ -17,9 +17,9 @@
 </script>
 
 <div class="rotate-container">
-  <div bind:this={scroller} class="test-container {testName}-container">
+  <div bind:this={scroller} class="trial-container {trialName}-container">
     <div class="filler">
-      <div bind:this={testElement} class="test-element {testName}">{testName}</div>
+      <div bind:this={trialElement} class="trial-element {trialName}">{trialName}</div>
     </div>
   </div>
 </div>

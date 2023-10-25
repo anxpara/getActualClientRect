@@ -1,11 +1,11 @@
 import { expect, test } from '@playwright/test';
-import { testNames } from '../src/lib/testNames';
+import { trialNames } from '../src/lib/trialNames';
 
 test.describe.configure({ mode: 'parallel' });
 
-testNames.forEach((testName) => {
-  test(`test ${testName}`, async ({ page }, testInfo) => {
-    await page.goto(`http://localhost:4173/${testName}`);
-    await expect(page).toHaveScreenshot([testName, testInfo.project.name + '.png']);
+trialNames.forEach((trialName) => {
+  test(`test trial ${trialName}`, async ({ page }, testInfo) => {
+    await page.goto(`http://localhost:4173/${trialName}`);
+    await expect(page).toHaveScreenshot([trialName, testInfo.project.name + '.png']);
   });
 });

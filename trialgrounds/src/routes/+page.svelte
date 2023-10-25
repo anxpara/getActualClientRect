@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, tick } from 'svelte';
-  import { allTestCases } from '../lib/testCases';
+  import { allTrials } from '../lib/trials';
   import Matcher from '../components/Matcher.svelte';
 
   onMount(async () => {
@@ -10,34 +10,34 @@
   });
 
   function matchAllTests(): void {
-    allTestCases.forEach((test) => {
-      const el = test.testComponent?.getTestElement();
+    allTrials.forEach((trial) => {
+      const el = trial.trialComponent?.getTrialElement();
       if (!el) {
-        throw new Error('failed to get test el from test component');
+        throw new Error('failed to get trial el from trial component');
       }
-      const matcher = test.matcher;
+      const matcher = trial.matcher;
       if (!matcher) {
-        throw new Error('failed to get matcher for test component');
+        throw new Error('failed to get matcher for trial component');
       }
-      matcher.match(el, test.name);
+      matcher.match(el, trial.name);
     });
   }
 </script>
 
-<div class="all-tests-container">
-  {#each allTestCases as test}
-    <svelte:component this={test.testType} bind:this={test.testComponent} />
+<div class="all-trials-container">
+  {#each allTrials as trial}
+    <svelte:component this={trial.trialType} bind:this={trial.trialComponent} />
   {/each}
 </div>
 
 <div class="matcher-container">
-  {#each allTestCases as test}
-    <Matcher bind:this={test.matcher} />
+  {#each allTrials as trial}
+    <Matcher bind:this={trial.matcher} />
   {/each}
 </div>
 
 <style lang="scss">
-  .all-tests-container {
+  .all-trials-container {
     position: absolute;
     top: 14em;
     display: flex;

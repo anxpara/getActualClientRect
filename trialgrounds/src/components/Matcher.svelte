@@ -4,8 +4,8 @@
 
   let matcher: HTMLElement;
 
-  export function match(element: HTMLElement, testName: string): void {
-    matcher.innerText = testName;
+  export function match(element: HTMLElement, trialName: string): void {
+    matcher.innerText = trialName;
 
     const acr = getActualClientRect(element);
     anime.set(matcher, {
