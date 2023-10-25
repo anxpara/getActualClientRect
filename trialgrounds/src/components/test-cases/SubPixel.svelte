@@ -1,18 +1,20 @@
 <script lang="ts">
   import { TestName } from '../../lib/testNames';
 
+  let testName = TestName.SubPixel;
+
   let testElement: HTMLElement;
   export function getTestElement(): HTMLElement {
     return testElement;
   }
 </script>
 
-<div class="test-container sub-pixel">
-  <div bind:this={testElement} class="test-element sub-pixel">{TestName.SubPixel}</div>
+<div class="test-container {testName}-container">
+  <div bind:this={testElement} class="test-element {testName}">{testName}</div>
 </div>
 
 <style lang="scss">
-  .test-container.sub-pixel {
+  .sub-pixel-container {
     position: fixed;
     top: 10.2px;
     left: 10.2px;

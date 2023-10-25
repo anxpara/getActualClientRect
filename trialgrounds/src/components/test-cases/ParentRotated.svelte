@@ -1,18 +1,20 @@
 <script lang="ts">
   import { TestName } from '../../lib/testNames';
 
+  let testName = TestName.ParentRotated;
+
   let testElement: HTMLElement;
   export function getTestElement(): HTMLElement {
     return testElement;
   }
 </script>
 
-<div class="test-container parent-rotated">
-  <div bind:this={testElement} class="test-element">{TestName.ParentRotated}</div>
+<div class="test-container {testName}-container">
+  <div bind:this={testElement} class="test-element {testName}">{testName}</div>
 </div>
 
 <style lang="scss">
-  .test-container.parent-rotated {
+  .parent-rotated-container {
     transform: rotate(15deg);
   }
 </style>
