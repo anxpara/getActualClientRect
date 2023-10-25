@@ -1,12 +1,19 @@
 <script lang="ts">
-  import { onMount, tick } from 'svelte';
+  import { onDestroy, onMount, tick } from 'svelte';
   import { allTrials } from '../lib/trials';
   import Matcher from '../components/Matcher.svelte';
+
+  let matchInterval: NodeJS.Timeout | undefined = undefined;
 
   onMount(async () => {
     window.scrollTo(0, 0);
     await tick();
     matchAllTests();
+    matchInterval = setInterval(matchAllTests, 300);
+  });
+
+  onDestroy(() => {
+    clearInterval(matchInterval);
   });
 
   function matchAllTests(): void {
