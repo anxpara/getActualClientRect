@@ -38,12 +38,11 @@
 
 <style lang="scss">
   .all-tests-container {
+    position: absolute;
+    top: 14em;
     display: flex;
     justify-content: center;
-    align-items: center;
-    align-content: center;
     flex-wrap: wrap;
-    height: 100svh;
     gap: 2em;
   }
 </style>
