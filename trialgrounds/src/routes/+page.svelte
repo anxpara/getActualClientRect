@@ -33,17 +33,25 @@
 
 <div class="all-trials-container">
   {#each allTrials as trial}
-    <svelte:component this={trial.trialType} bind:this={trial.trialComponent} />
+    <a href="/{trial.name}">
+      <svelte:component this={trial.trialType} bind:this={trial.trialComponent} />
+    </a>
   {/each}
 </div>
 
 <div class="matcher-container">
   {#each allTrials as trial}
-    <Matcher bind:this={trial.matcher} />
+    <a href="/{trial.name}">
+      <Matcher bind:this={trial.matcher} />
+    </a>
   {/each}
 </div>
 
 <style lang="scss">
+  a {
+    text-decoration: none;
+  }
+
   .all-trials-container {
     position: absolute;
     top: 14em;
