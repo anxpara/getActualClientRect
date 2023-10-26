@@ -25,6 +25,9 @@ import KeepInlineTransform from '../components/trials/KeepInlineTransform.svelte
 import TwoContainersPreserve3d from '../components/trials/TwoContainersPreserve3d.svelte';
 import OuterContainerPreserve3d from '../components/trials/OuterContainerPreserve3d.svelte';
 import PaddedParentRotated from '../components/trials/PaddedParentRotated.svelte';
+import MarginedChildInRotate from '../components/trials/MarginedChildInRotate.svelte';
+import Bordered from '../components/trials/Bordered.svelte';
+import BorderedParentRotated from '../components/trials/BorderedParentRotated.svelte';
 
 export interface TrialControls {
   getTrialElement: () => HTMLElement;
@@ -43,6 +46,8 @@ export const allTrials: Trial[] = [
   { name: TrialName.Control, trialType: Control },
   { name: TrialName.KeepInlineTransform, trialType: KeepInlineTransform },
   { name: TrialName.SubPixel, trialType: SubPixel },
+  { name: TrialName.Bordered, trialType: Bordered },
+  { name: TrialName.BorderedParentRotated, trialType: BorderedParentRotated },
   { name: TrialName.Relative, trialType: Relative },
   { name: TrialName.Absolute, trialType: Absolute },
   { name: TrialName.Fixed, trialType: Fixed },
@@ -54,6 +59,7 @@ export const allTrials: Trial[] = [
   { name: TrialName.Rotated, trialType: Rotated },
   { name: TrialName.ParentRotated, trialType: ParentRotated },
   { name: TrialName.PaddedParentRotated, trialType: PaddedParentRotated },
+  { name: TrialName.MarginedChildInRotate, trialType: MarginedChildInRotate },
   { name: TrialName.TwoRotations, trialType: TwoRotations },
   { name: TrialName.RotationsOrigin0, trialType: Origin0Rotations },
   { name: TrialName.Rotations3d, trialType: Rotations3d },
