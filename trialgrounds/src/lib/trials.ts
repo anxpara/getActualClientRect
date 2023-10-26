@@ -21,6 +21,10 @@ import Scroll from '../components/trials/Scroll.svelte';
 import ScrollInRotate from '../components/trials/ScrollInRotate.svelte';
 import Sticky from '../components/trials/Sticky.svelte';
 import FixedInTransform from '../components/trials/FixedInTransform.svelte';
+import KeepInlineTransform from '../components/trials/KeepInlineTransform.svelte';
+import TwoContainersPreserve3d from '../components/trials/TwoContainersPreserve3d.svelte';
+import OuterContainerPreserve3d from '../components/trials/OuterContainerPreserve3d.svelte';
+import PaddedParentRotated from '../components/trials/PaddedParentRotated.svelte';
 
 export interface TrialControls {
   getTrialElement: () => HTMLElement;
@@ -37,6 +41,7 @@ export type Trial = {
 
 export const allTrials: Trial[] = [
   { name: TrialName.Control, trialType: Control },
+  { name: TrialName.KeepInlineTransform, trialType: KeepInlineTransform },
   { name: TrialName.SubPixel, trialType: SubPixel },
   { name: TrialName.Relative, trialType: Relative },
   { name: TrialName.Absolute, trialType: Absolute },
@@ -48,6 +53,7 @@ export const allTrials: Trial[] = [
   { name: TrialName.Translated, trialType: Translated },
   { name: TrialName.Rotated, trialType: Rotated },
   { name: TrialName.ParentRotated, trialType: ParentRotated },
+  { name: TrialName.PaddedParentRotated, trialType: PaddedParentRotated },
   { name: TrialName.TwoRotations, trialType: TwoRotations },
   { name: TrialName.RotationsOrigin0, trialType: Origin0Rotations },
   { name: TrialName.Rotations3d, trialType: Rotations3d },
@@ -56,6 +62,8 @@ export const allTrials: Trial[] = [
   { name: TrialName.RotationsPreserve3dCountering, trialType: RotationsPreserve3dCountering },
   { name: TrialName.Transforms3dComplicated, trialType: Transforms3dComplicated },
   { name: TrialName.TransformsPreserve3dComplicated, trialType: TransformsPreserve3dComplicated },
+  { name: TrialName.TwoContainersPreserve3d, trialType: TwoContainersPreserve3d },
+  { name: TrialName.OuterContainerPreserve3d, trialType: OuterContainerPreserve3d },
 ];
 export const trialsByName = new Map<TrialName, Trial>(
   allTrials.map((trial) => [trial.name, trial]),

@@ -1,5 +1,6 @@
 export const TrialName = {
   Control: 'control',
+  KeepInlineTransform: 'keep-inline-transform',
   SubPixel: 'sub-pixel',
   Relative: 'relative',
   Absolute: 'absolute',
@@ -11,6 +12,7 @@ export const TrialName = {
   Translated: 'translated',
   Rotated: 'rotated',
   ParentRotated: 'parent-rotated',
+  PaddedParentRotated: 'padded-parent-rotated',
   TwoRotations: 'two-rotations',
   RotationsOrigin0: 'rotations-origin-0',
   Rotations3d: 'rotations-3d',
@@ -19,6 +21,8 @@ export const TrialName = {
   RotationsPreserve3dCountering: 'rotations-preserve-3d-countering',
   Transforms3dComplicated: 'transforms-3d-complicated',
   TransformsPreserve3dComplicated: 'transforms-preserve-3d-complicated',
+  TwoContainersPreserve3d: 'two-containers-preserve-3d',
+  OuterContainerPreserve3d: 'outer-container-preserve-3d',
 } as const;
 export type TrialName = (typeof TrialName)[keyof typeof TrialName];
 export const trialNames: string[] = Object.values(TrialName);
