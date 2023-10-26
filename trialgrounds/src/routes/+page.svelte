@@ -60,4 +60,8 @@
     flex-wrap: wrap;
     gap: 2em;
   }
+
+  .matcher-container {
+    position: fixed;
+  }
 </style>
