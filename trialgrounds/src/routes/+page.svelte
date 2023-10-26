@@ -6,7 +6,6 @@
   let matchInterval: NodeJS.Timeout | undefined = undefined;
 
   onMount(async () => {
-    window.scrollTo(0, 0);
     await tick();
     matchAllTests();
     matchInterval = setInterval(matchAllTests, 300);
