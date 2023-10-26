@@ -48,6 +48,8 @@
 
 <style lang="scss">
   a {
+    width: fit-content;
+    height: fit-content;
     text-decoration: none;
   }
 
