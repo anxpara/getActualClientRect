@@ -15,6 +15,8 @@
 
 <style lang="scss">
   .rotations-3d-countering-container {
+    width: fit-content;
+    height: fit-content;
     transform: rotateY(45deg);
 
     .rotations-3d-countering {
