@@ -18,15 +18,7 @@
     if (!trial?.trialComponent) {
       throw new Error('trial component failed to load');
     }
-
-    matchTest();
-    matchInterval = setInterval(matchTest, 300);
   });
-
-  function matchTest(): void {
-    matcher.match(trial.trialComponent!.getTrialElement(), trial.name);
-    untransformedMatcher.match(trial.trialComponent!.getTrialElement(), '');
-  }
 </script>
 
 <div class="lone-trial-container">
@@ -35,9 +27,14 @@
   {/if}
 </div>
 <div class="matcher-container">
-  <Matcher bind:this={matcher} />
+  <Matcher element={trial.trialComponent?.getTrialElement()} trialName={trial.name} />
   {#if showUntransformedRect}
-    <Matcher bind:this={untransformedMatcher} untransformed={true} />
+    <Matcher
+      element={trial.trialComponent?.getTrialElement()}
+      trialName={''}
+      untransformed={true}
+    />
+  {/if}
   {/if}
 </div>
 

@@ -1,33 +1,14 @@
 <script lang="ts">
-  import { onDestroy, onMount, tick } from 'svelte';
   import { allTrials } from '../lib/trials';
   import Matcher from '../components/Matcher.svelte';
+  import { onMount, tick } from 'svelte';
 
-  let matchInterval: NodeJS.Timeout | undefined = undefined;
+  let trialsLoaded = false;
 
   onMount(async () => {
     await tick();
-    matchAllTests();
-    matchInterval = setInterval(matchAllTests, 300);
+    trialsLoaded = true;
   });
-
-  onDestroy(() => {
-    clearInterval(matchInterval);
-  });
-
-  function matchAllTests(): void {
-    allTrials.forEach((trial) => {
-      const el = trial.trialComponent?.getTrialElement();
-      if (!el) {
-        throw new Error('failed to get trial el from trial component');
-      }
-      const matcher = trial.matcher;
-      if (!matcher) {
-        throw new Error('failed to get matcher for trial component');
-      }
-      matcher.match(el, trial.name);
-    });
-  }
 </script>
 
 <div class="all-trials-container">
@@ -39,11 +20,13 @@
 </div>
 
 <div class="matcher-container">
-  {#each allTrials as trial}
-    <a href="/{trial.name}">
-      <Matcher bind:this={trial.matcher} />
-    </a>
-  {/each}
+  {#if trialsLoaded}
+    {#each allTrials as trial}
+      <a href="/{trial.name}">
+        <Matcher element={trial.trialComponent?.getTrialElement()} trialName={trial.name} />
+      </a>
+    {/each}
+  {/if}
 </div>
 
 <style lang="scss">

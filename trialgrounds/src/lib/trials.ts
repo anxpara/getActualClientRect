@@ -39,7 +39,6 @@ export type Trial = {
   name: TrialName;
   trialType: ComponentType<TrialComponent>;
   trialComponent?: TrialComponent;
-  matcher?: Matcher;
 };
 
 export const allTrials: Trial[] = [

@@ -1,11 +1,29 @@
 <script lang="ts">
   import anime from 'animejs';
   import { getActualClientRect } from 'actual-client-rect';
+  import { onDestroy, onMount, tick } from 'svelte';
 
+  export let element: HTMLElement | undefined;
+  export let trialName: string;
   export let untransformed = false;
   let matcher: HTMLElement;
 
-  export function match(element: HTMLElement, trialName: string): void {
+  let matchInterval: NodeJS.Timeout | undefined = undefined;
+
+  onMount(async () => {
+    await tick();
+
+    match();
+    matchInterval = setInterval(match, 300);
+  });
+
+  onDestroy(() => {
+    clearInterval(matchInterval);
+  });
+
+  export function match(): void {
+    if (!element) return;
+
     matcher.innerText = trialName;
 
     const acr = getActualClientRect(element);
