@@ -5,10 +5,9 @@
   import { trialsByName } from '../../lib/trials';
   import type { TrialName } from '../../lib/trialNames';
 
+  export let data;
+
   $: trial = trialsByName.get($page.params.trialName as TrialName)!;
-  $: showUntransformedRect = $page.url.searchParams.get('showUntransformedRect') === 'true';
-  $: showUntransformedContainers =
-    $page.url.searchParams.get('showUntransformedContainers') === 'true';
 
   onMount(async () => {
     await tick();
@@ -26,14 +25,14 @@
 </div>
 <div class="matcher-container">
   <Matcher element={trial.trialComponent?.getTrialElement()} trialName={trial.name} />
-  {#if showUntransformedRect}
+  {#if data.showUntransformedRect}
     <Matcher
       element={trial.trialComponent?.getTrialElement()}
       trialName={''}
       untransformed={true}
     />
   {/if}
-  {#if showUntransformedContainers}
+  {#if data.showUntransformedContainers}
     {#each trial.trialComponent?.getContainers() ?? [] as container}
       <Matcher element={container} trialName={''} untransformed={true} />
     {/each}

@@ -4,12 +4,9 @@
   import { onMount, tick } from 'svelte';
   import { page } from '$app/stores';
 
-  const trialNames = $page.url.searchParams.get('trialNames')?.split(',') ?? [];
-  const trials = trialNames.length ? getTrials(trialNames) : allTrials;
+  export let data;
 
-  $: showUntransformedRect = $page.url.searchParams.get('showUntransformedRect') === 'true';
-  $: showUntransformedContainers =
-    $page.url.searchParams.get('showUntransformedContainers') === 'true';
+  const trials = data.trialNames.length ? getTrials(data.trialNames) : allTrials;
 
   let trialsLoaded = false;
 
@@ -33,14 +30,14 @@
       <a href="/{trial.name}{$page.url.search}">
         <Matcher element={trial.trialComponent?.getTrialElement()} trialName={trial.name} />
       </a>
-      {#if showUntransformedRect}
+      {#if data.showUntransformedRect}
         <Matcher
           element={trial.trialComponent?.getTrialElement()}
           trialName={''}
           untransformed={true}
         />
       {/if}
-      {#if showUntransformedContainers}
+      {#if data.showUntransformedContainers}
         {#each trial.trialComponent?.getContainers() ?? [] as container}
           <Matcher element={container} trialName={''} untransformed={true} />
         {/each}
