@@ -5,12 +5,10 @@
   import { trialsByName } from '../../lib/trials';
   import type { TrialName } from '../../lib/trialNames';
 
-  let matcher: Matcher;
-  let untransformedMatcher: Matcher;
   $: trial = trialsByName.get($page.params.trialName as TrialName)!;
   $: showUntransformedRect = $page.url.searchParams.get('showUntransformedRect') === 'true';
-
-  let matchInterval: NodeJS.Timeout | undefined = undefined;
+  $: showUntransformedContainers =
+    $page.url.searchParams.get('showUntransformedContainers') === 'true';
 
   onMount(async () => {
     await tick();
@@ -35,6 +33,10 @@
       untransformed={true}
     />
   {/if}
+  {#if showUntransformedContainers}
+    {#each trial.trialComponent?.getContainers() ?? [] as container}
+      <Matcher element={container} trialName={''} untransformed={true} />
+    {/each}
   {/if}
 </div>
 

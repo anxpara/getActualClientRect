@@ -47,5 +47,6 @@
 <style lang="scss">
   .untransformed {
     outline-style: dashed;
+    color: coral;
   }
 </style>
