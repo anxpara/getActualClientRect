@@ -8,6 +8,8 @@
   let matcher: Matcher;
   $: trial = trialsByName.get($page.params.trialName as TrialName)!;
 
+  let matchInterval: NodeJS.Timeout | undefined = undefined;
+
   onMount(async () => {
     await tick();
 
@@ -15,8 +17,13 @@
       throw new Error('trial component failed to load');
     }
 
-    matcher.match(trial.trialComponent.getTrialElement(), trial.name);
+    matchTest();
+    matchInterval = setInterval(matchTest, 300);
   });
+
+  function matchTest(): void {
+    matcher.match(trial.trialComponent!.getTrialElement(), trial.name);
+  }
 </script>
 
 <div class="lone-trial-container">
