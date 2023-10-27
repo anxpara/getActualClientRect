@@ -4,10 +4,14 @@
 
   let trialName = TrialName.Scroll;
 
-  let scroller: HTMLElement;
   let trialElement: HTMLElement;
   export function getTrialElement(): HTMLElement {
     return trialElement;
+  }
+
+  let scroller: HTMLElement;
+  export function getContainers(): HTMLElement[] {
+    return [scroller];
   }
 
   onMount(() => {

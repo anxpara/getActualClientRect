@@ -7,6 +7,10 @@
   export function getTrialElement(): HTMLElement {
     return trialElement;
   }
+
+  export function getContainers(): HTMLElement[] {
+    return [];
+  }
 </script>
 
 <div bind:this={trialElement} class="trial-element {trialName}">{trialName}</div>

@@ -31,6 +31,7 @@ import BorderedParentRotated from '../components/trials/BorderedParentRotated.sv
 
 export interface TrialControls {
   getTrialElement: () => HTMLElement;
+  getContainers: () => HTMLElement[];
 }
 
 export type TrialComponent = SvelteComponent & TrialControls;

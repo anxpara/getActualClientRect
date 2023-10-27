@@ -7,10 +7,16 @@
   export function getTrialElement(): HTMLElement {
     return trialElement;
   }
+
+  let outerContainer: HTMLElement;
+  let innerContainer: HTMLElement;
+  export function getContainers(): HTMLElement[] {
+    return [outerContainer, innerContainer];
+  }
 </script>
 
-<div class="trial-container {trialName}-outer-container">
-  <div class="trial-container {trialName}-inner-container">
+<div bind:this={outerContainer} class="trial-container {trialName}-outer-container">
+  <div bind:this={innerContainer} class="trial-container {trialName}-inner-container">
     <div bind:this={trialElement} class="trial-element {trialName}">{trialName}</div>
   </div>
 </div>

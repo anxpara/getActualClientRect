@@ -4,10 +4,15 @@
 
   let trialName = TrialName.ScrollInRotate;
 
-  let scroller: HTMLElement;
   let trialElement: HTMLElement;
   export function getTrialElement(): HTMLElement {
     return trialElement;
+  }
+
+  let container: HTMLElement;
+  let scroller: HTMLElement;
+  export function getContainers(): HTMLElement[] {
+    return [container, scroller];
   }
 
   onMount(() => {
@@ -16,7 +21,7 @@
   });
 </script>
 
-<div class="rotate-container">
+<div bind:this={container} class="rotate-container">
   <div bind:this={scroller} class="trial-container {trialName}-container">
     <div class="filler">
       <div bind:this={trialElement} class="trial-element {trialName}">{trialName}</div>

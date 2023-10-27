@@ -7,11 +7,20 @@
   export function getTrialElement(): HTMLElement {
     return trialElement;
   }
+
+  let container: HTMLElement;
+  export function getContainers(): HTMLElement[] {
+    return [container];
+  }
 </script>
 
 <div class="trial-container">
   <div class="trial-container {trialName}-container-fail" style="transform: rotate(15deg);" />
-  <div class="trial-container {trialName}-container" style="transform: rotate(15deg);">
+  <div
+    bind:this={container}
+    class="trial-container {trialName}-container"
+    style="transform: rotate(15deg);"
+  >
     <div class="trial-element {trialName}" style="transform: rotate(15deg);">{trialName}</div>
     <div
       bind:this={trialElement}
