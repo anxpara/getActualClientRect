@@ -6,7 +6,9 @@
   import type { TrialName } from '../../lib/trialNames';
 
   let matcher: Matcher;
+  let untransformedMatcher: Matcher;
   $: trial = trialsByName.get($page.params.trialName as TrialName)!;
+  $: showUntransformedRect = $page.url.searchParams.get('showUntransformedRect') === 'true';
 
   let matchInterval: NodeJS.Timeout | undefined = undefined;
 
@@ -23,6 +25,7 @@
 
   function matchTest(): void {
     matcher.match(trial.trialComponent!.getTrialElement(), trial.name);
+    untransformedMatcher.match(trial.trialComponent!.getTrialElement(), '');
   }
 </script>
 
@@ -33,6 +36,9 @@
 </div>
 <div class="matcher-container">
   <Matcher bind:this={matcher} />
+  {#if showUntransformedRect}
+    <Matcher bind:this={untransformedMatcher} untransformed={true} />
+  {/if}
 </div>
 
 <style lang="scss">
