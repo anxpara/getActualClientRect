@@ -1,8 +1,11 @@
 <script lang="ts">
-  import { allTrials } from '../lib/trials';
+  import { allTrials, getTrials } from '../lib/trials';
   import Matcher from '../components/Matcher.svelte';
   import { onMount, tick } from 'svelte';
+  import { page } from '$app/stores';
 
+  const trialNames = $page.url.searchParams.get('trialNames')?.split(',') ?? [];
+  const trials = trialNames.length ? getTrials(trialNames) : allTrials;
   let trialsLoaded = false;
 
   onMount(async () => {
@@ -12,7 +15,7 @@
 </script>
 
 <div class="all-trials-container">
-  {#each allTrials as trial}
+  {#each trials as trial}
     <a href="/{trial.name}">
       <svelte:component this={trial.trialType} bind:this={trial.trialComponent} />
     </a>
@@ -21,7 +24,7 @@
 
 <div class="matcher-container">
   {#if trialsLoaded}
-    {#each allTrials as trial}
+    {#each trials as trial}
       <a href="/{trial.name}">
         <Matcher element={trial.trialComponent?.getTrialElement()} trialName={trial.name} />
       </a>

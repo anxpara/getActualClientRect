@@ -74,3 +74,9 @@ export const allTrials: Trial[] = [
 export const trialsByName = new Map<TrialName, Trial>(
   allTrials.map((trial) => [trial.name, trial]),
 );
+
+export function getTrials(trialNames: string[]): Trial[] {
+  return trialNames
+    .map((name) => trialsByName.get(name as TrialName))
+    .filter((trial) => !!trial) as Trial[];
+}
