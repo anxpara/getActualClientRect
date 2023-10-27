@@ -48,5 +48,6 @@
   .untransformed {
     outline-style: dashed;
     color: coral;
+    pointer-events: none;
   }
 </style>

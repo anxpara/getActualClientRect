@@ -6,6 +6,11 @@
 
   const trialNames = $page.url.searchParams.get('trialNames')?.split(',') ?? [];
   const trials = trialNames.length ? getTrials(trialNames) : allTrials;
+
+  $: showUntransformedRect = $page.url.searchParams.get('showUntransformedRect') === 'true';
+  $: showUntransformedContainers =
+    $page.url.searchParams.get('showUntransformedContainers') === 'true';
+
   let trialsLoaded = false;
 
   onMount(async () => {
@@ -16,7 +21,7 @@
 
 <div class="all-trials-container">
   {#each trials as trial}
-    <a href="/{trial.name}">
+    <a href="/{trial.name}{$page.url.search}">
       <svelte:component this={trial.trialType} bind:this={trial.trialComponent} />
     </a>
   {/each}
@@ -25,9 +30,21 @@
 <div class="matcher-container">
   {#if trialsLoaded}
     {#each trials as trial}
-      <a href="/{trial.name}">
+      <a href="/{trial.name}{$page.url.search}">
         <Matcher element={trial.trialComponent?.getTrialElement()} trialName={trial.name} />
       </a>
+      {#if showUntransformedRect}
+        <Matcher
+          element={trial.trialComponent?.getTrialElement()}
+          trialName={''}
+          untransformed={true}
+        />
+      {/if}
+      {#if showUntransformedContainers}
+        {#each trial.trialComponent?.getContainers() ?? [] as container}
+          <Matcher element={container} trialName={''} untransformed={true} />
+        {/each}
+      {/if}
     {/each}
   {/if}
 </div>
