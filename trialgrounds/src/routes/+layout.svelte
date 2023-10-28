@@ -6,23 +6,26 @@
   <h1>collections & presets</h1>
   <ul>
     <li>
-      <a href="/"> all </a>
+      <a data-sveltekit-reload href="/"> all </a>
     </li>
     <li>
       <a
+        data-sveltekit-reload
         href="/?trialNames=control,padded-parent-rotated,scroll-in-rotate&showUntransformedRect&showUntransformedContainers"
       >
         offset rotations collection
       </a>
     </li>
     <li>
-      <a href="/?showUntransformedRect">show untransformed rects</a>
+      <a data-sveltekit-replacestate href="/?showUntransformedRect">show untransformed rects</a>
     </li>
     <li>
-      <a href="/?showUntransformedRect&showUntransformedContainers"> & untransformed containers </a>
+      <a data-sveltekit-replacestate href="/?showUntransformedRect&showUntransformedContainers">
+        & untransformed containers
+      </a>
     </li>
     <li>
-      <a href="/"> clear options </a>
+      <a data-sveltekit-replacestate href="/"> clear options </a>
     </li>
   </ul>
 </nav>
