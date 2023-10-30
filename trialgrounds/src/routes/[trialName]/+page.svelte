@@ -6,6 +6,7 @@
   import type { TrialName } from '../../lib/trialNames';
 
   export let data;
+  $: matchOnce = data.matchOnce;
 
   $: trial = trialsByName.get($page.params.trialName as TrialName)!;
 
@@ -24,17 +25,18 @@
   {/if}
 </div>
 <div class="matcher-container">
-  <Matcher element={trial.trialComponent?.getTrialElement()} trialName={trial.name} />
+  <Matcher element={trial.trialComponent?.getTrialElement()} trialName={trial.name} {matchOnce} />
   {#if data.showUntransformedRect}
     <Matcher
       element={trial.trialComponent?.getTrialElement()}
       trialName={''}
       untransformed={true}
+      {matchOnce}
     />
   {/if}
   {#if data.showUntransformedContainers}
     {#each trial.trialComponent?.getContainers() ?? [] as container}
-      <Matcher element={container} trialName={''} untransformed={true} />
+      <Matcher element={container} trialName={''} untransformed={true} {matchOnce} />
     {/each}
   {/if}
 </div>

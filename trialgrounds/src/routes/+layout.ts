@@ -4,6 +4,7 @@ export async function load({ params, url }) {
   const trialNames = url.searchParams.get('trialNames')?.split(',') ?? [];
   const showUntransformedRect = url.searchParams.has('showUntransformedRect');
   const showUntransformedContainers = url.searchParams.has('showUntransformedContainers');
+  const matchOnce = url.searchParams.has('matchOnce');
 
-  return { trialNames, showUntransformedRect, showUntransformedContainers };
+  return { trialNames, showUntransformedRect, showUntransformedContainers, matchOnce };
 }

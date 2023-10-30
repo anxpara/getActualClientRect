@@ -6,6 +6,7 @@
   export let element: HTMLElement | undefined;
   export let trialName: string;
   export let untransformed = false;
+  export let matchOnce = false;
   let matcher: HTMLElement;
 
   let matchInterval: NodeJS.Timeout | undefined = undefined;
@@ -14,6 +15,8 @@
     await tick();
 
     match();
+    if (matchOnce) return;
+
     matchInterval = setInterval(match, 300);
   });
 

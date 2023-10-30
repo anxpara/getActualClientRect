@@ -5,6 +5,7 @@
   import { page } from '$app/stores';
 
   export let data;
+  $: matchOnce = data.matchOnce;
 
   const trials = data.trialNames.length ? getTrials(data.trialNames) : allTrials;
 
@@ -28,18 +29,23 @@
   {#if trialsLoaded}
     {#each trials as trial}
       <a href="/{trial.name}{$page.url.search}">
-        <Matcher element={trial.trialComponent?.getTrialElement()} trialName={trial.name} />
+        <Matcher
+          element={trial.trialComponent?.getTrialElement()}
+          trialName={trial.name}
+          {matchOnce}
+        />
       </a>
       {#if data.showUntransformedRect}
         <Matcher
           element={trial.trialComponent?.getTrialElement()}
           trialName={''}
           untransformed={true}
+          {matchOnce}
         />
       {/if}
       {#if data.showUntransformedContainers}
         {#each trial.trialComponent?.getContainers() ?? [] as container}
-          <Matcher element={container} trialName={''} untransformed={true} />
+          <Matcher element={container} trialName={''} untransformed={true} {matchOnce} />
         {/each}
       {/if}
     {/each}
