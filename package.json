@@ -1,7 +1,7 @@
 {
   "name": "actual-client-rect",
   "version": "0.0.1",
-  "description": "gets an element's actual client rect with transform",
+  "description": "gets an element's actual client rect with transform. ALPHA",
   "sideEffects": false,
   "main": "dist/cjs/getActualClientRect.js",
   "module": "dist/es/getActualClientRect.js",
@@ -24,10 +24,7 @@
     "actual client rect",
     "getActualClientRect",
     "getBoundingClientRect",
-    "getACR",
-    "getBCR",
-    "dom projection",
-    "flip"
+    "dom projection"
   ],
   "author": "anxpara anx@anxpara.com",
   "license": "MIT",
