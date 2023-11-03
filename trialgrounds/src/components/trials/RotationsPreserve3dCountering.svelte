@@ -23,6 +23,7 @@
     width: fit-content;
     height: fit-content;
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
     transform: rotateY(45deg);
 
     .rotations-preserve-3d-countering {

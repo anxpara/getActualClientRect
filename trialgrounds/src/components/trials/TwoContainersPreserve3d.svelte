@@ -27,6 +27,7 @@
     height: fit-content;
     padding: 1em;
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
     transform: rotateY(65deg);
 
     .two-containers-preserve-3d-inner-container {
@@ -34,6 +35,7 @@
       height: fit-content;
       padding: 1em;
       transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
       transform: rotateY(253deg);
 
       .two-containers-preserve-3d {

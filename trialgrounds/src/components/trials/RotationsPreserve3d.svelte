@@ -23,6 +23,7 @@
 <style lang="scss">
   .rotations-preserve-3d-container {
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
     transform: rotateX(10deg) rotateZ(10deg);
 
     .rotations-preserve-3d {
