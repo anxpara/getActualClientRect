@@ -1,4 +1,4 @@
-import { mat4 } from "gl-matrix";
+import { glMatrix, mat4 } from "gl-matrix";
 import {
   convertMat4ToCssMatrix3dSubstring,
   getElementTransformMat4,
@@ -73,10 +73,6 @@ function calculateTransformForBasis(basis: DOMRect, elementInfos: ElementInfo[])
   let accumulatedTransform = mat4.create();
   mat4.identity(accumulatedTransform);
 
-  // offsets are necessary during calculation, but must be removed afterward, so accumulate separately
-  let accumulatedOffsets = mat4.create();
-  mat4.identity(accumulatedOffsets);
-
   // shift the frame of reference to the basis' center
   const basisCenterMat4 = mat4.create();
   mat4.fromTranslation(basisCenterMat4, getRectCenterVec3(basis));
@@ -90,17 +86,14 @@ function calculateTransformForBasis(basis: DOMRect, elementInfos: ElementInfo[])
     mat4.invert(originMat4, originMat4);
     mat4.multiply(accumulatedTransform, originMat4, accumulatedTransform);
 
+    // pre-multiply the accumulated transform with the current element's transform
+    const transformMat4 = getElementTransformMat4(element);
+    mat4.multiply(accumulatedTransform, transformMat4, accumulatedTransform);
+
     // translate by the current element's offset from its direct parent
     const offsetMat4 = mat4.create();
     mat4.fromTranslation(offsetMat4, getRectPositionVec3(directOffset!));
     mat4.multiply(accumulatedTransform, offsetMat4, accumulatedTransform);
-
-    // accumulate offsets
-    mat4.multiply(accumulatedOffsets, offsetMat4, accumulatedOffsets);
-
-    // pre-multiply the accumulated transform with the current element's transform
-    const transformMat4 = getElementTransformMat4(element);
-    mat4.multiply(accumulatedTransform, transformMat4, accumulatedTransform);
 
     // unshift the frame of reference from the transform-origin
     mat4.invert(originMat4, originMat4);
@@ -119,9 +112,11 @@ function calculateTransformForBasis(basis: DOMRect, elementInfos: ElementInfo[])
   mat4.invert(basisCenterMat4, basisCenterMat4);
   mat4.multiply(accumulatedTransform, basisCenterMat4, accumulatedTransform);
 
-  // remove the accumulated offsets to get the final accumulated transform relative to the basis
-  mat4.invert(accumulatedOffsets, accumulatedOffsets);
-  mat4.multiply(accumulatedTransform, accumulatedOffsets, accumulatedTransform);
+  // subtract the basis' position to get the final accumulated transform relative to the basis
+  const basisPositionMat4 = mat4.create();
+  mat4.fromTranslation(basisPositionMat4, getRectPositionVec3(basis));
+  mat4.invert(basisPositionMat4, basisPositionMat4);
+  mat4.multiply(accumulatedTransform, basisPositionMat4, accumulatedTransform);
 
   return accumulatedTransform;
 }
