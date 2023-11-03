@@ -17,7 +17,7 @@ It's 2023 and web developers still don't have any good options for obtaining the
 
 ## Solution
 
-getActualClientRect() returns the element's basis DOMRect relative to the viewport, plus its accumulated transform in 3 formats: css transform string, css transform's matrix3d substring, and a gl-matrix mat4.
+getActualClientRect() returns the element's basis DOMRect relative to the viewport, plus its accumulated transform in 3 formats: css transform string, css transform's matrix3d substring, and a gl-matrix mat4 (row-major formatted 4x4 array).
 
 ### Types
 
