@@ -1,38 +1,34 @@
-# create-svelte
-
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+# Init
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+npm i
 ```
 
-## Developing
+# Testing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+```bash
+npm run test
+
+#or
+npx playwright test -g "testName"
+```
+
+- Missing golden screenshots indicate that the test case is not supported by getActualClientRect yet
+- Tests will occasionally fail due to a transient connection refused error
+
+## Updating golden screenshots
+
+```bash
+npm run updateTestScreenshots
+
+#or
+npx playwright test -g "testName" --update-snapshots
+```
+
+# Developing
 
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Then navigate to the link that Vite prints on the console
