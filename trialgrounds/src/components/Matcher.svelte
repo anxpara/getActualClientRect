@@ -17,7 +17,7 @@
     match();
     if (matchOnce) return;
 
-    matchInterval = setInterval(match, 300);
+    matchInterval = setInterval(match, 1000);
   });
 
   onDestroy(() => {
