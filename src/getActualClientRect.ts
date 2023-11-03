@@ -45,6 +45,8 @@ type ElementInfo = {
  *       offset subpixels and transform subpixels.
  * */
 export function getActualClientRect(element: HTMLElement, options?: ACROptions): ActualClientRect {
+  glMatrix.setMatrixArrayType(Array);
+
   const elementInfos = disableAllTransforms(element);
   const basis = element.getBoundingClientRect();
   calculateDirectOffsets(elementInfos);
