@@ -14,8 +14,7 @@
   ],
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "bash build.bsh",
-    "watch": "pm2 start pm2.config.js --only getActualClientRect-watcher"
+    "build": "bash build.bsh"
   },
   "repository": {
     "type": "git",
