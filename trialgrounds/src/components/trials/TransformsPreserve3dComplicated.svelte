@@ -20,10 +20,12 @@
 
 <style lang="scss">
   .transforms-preserve-3d-complicated-container {
-    transform: rotateX(10deg) rotateZ(10deg);
+    transform: skewX(10deg) translate(1em, 1em) rotateX(10deg) rotateZ(10deg);
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
 
     .transforms-preserve-3d-complicated {
-      transform: rotateX(40deg) rotateZ(35deg);
+      transform: skewX(10deg) translate(1em, 1em) rotateX(10deg) rotateZ(10deg);
     }
   }
 </style>
