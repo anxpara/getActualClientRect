@@ -64,11 +64,11 @@ export function convertCssTransformArrayToMat4(cssMatrix: string[]): mat4 {
 
   // prettier-ignore
   return mat4.fromValues(
-      floats[0],  floats[1],  floats[2],  floats[3],
-      floats[4],  floats[5],  floats[6],  floats[7],
-      floats[8],  floats[9],  floats[10], floats[11],
-      floats[12], floats[13], floats[14], floats[15]
-    );
+    floats[0],  floats[1],  floats[2],  floats[3],
+    floats[4],  floats[5],  floats[6],  floats[7],
+    floats[8],  floats[9],  floats[10], floats[11],
+    floats[12], floats[13], floats[14], floats[15]
+  );
 }
 
 export function convertMat4ToCssMatrix3dSubstring(mat: mat4): string {
