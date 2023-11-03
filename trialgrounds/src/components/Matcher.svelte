@@ -36,10 +36,10 @@
     }
 
     anime.set(matcher, {
-      width: acr.rect.width,
-      height: acr.rect.height,
-      top: acr.rect.top,
-      left: acr.rect.left,
+      width: acr.basis.width,
+      height: acr.basis.height,
+      top: acr.basis.top,
+      left: acr.basis.left,
       matrix3d: acr.matrix3d,
     });
   }

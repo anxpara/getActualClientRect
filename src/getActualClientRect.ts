@@ -1,30 +1,176 @@
 import { mat4 } from "gl-matrix";
+import {
+  convertMat4ToCssMatrix3dSubstring,
+  getElementTransformMat4,
+  getRectCenterVec3,
+  getElementTransformOriginVec3,
+  getRectPositionVec3,
+} from "./utils/transform-utils";
 
-/** an ActualClientRect is the true location, size, and shape of an element on the viewport, and is comprised of a DOMRect
- * plus a transform. the transform is provided in 3 formats: a mat4 from gl-matrix, a css transform string, and a css matrix3d string
+/**
+ * an ActualClientRect is the true location, size, and shape of an element on the viewport, and is comprised of an
+ * untransformed basis DOMRect, plus a transform. the transform is provided in 3 formats: css transform string,
+ * css transform's matrix3d substring, and gl-matrix mat4 array
  */
 export type ActualClientRect = {
-  rect: DOMRect;
-  transformMat4: mat4;
+  basis: DOMRect;
   transform: string;
   matrix3d: string;
+  transformMat4: mat4;
 };
 
-/** an ACR (alias for ActualClientRect) is the true location, size, and shape of an element on the viewport, and is comprised of a DOMRect
- * plus a transform. the transform is provided in 3 formats: matrix3d string, gl-matrix mat4, and transform string. */
-export type ACR = ActualClientRect;
+/**
+ * bakePositionIntoTransform (default = false): remove the position info from the basis DOMRect and add it to the transform.
+ *    convenient for optimizing animations, but sometimes causes subpixel inaccuracies due to differences between
+ *    offset subpixels and transform subpixels.
+ */
+export type ACROptions = {
+  bakePositionIntoTransform?: boolean;
+};
 
-/** gets the element's actual client rect, which is a DOMRect relative to the viewport, plus its transform.  */
-export function getActualClientRect(element: HTMLElement): ActualClientRect {
-  throw new Error("not implemented");
+type ElementInfo = {
+  element: HTMLElement;
+  inlineTransform: string;
+  directOffset?: DOMRect;
+};
+
+/**
+ * returns the element's ActualClientRect, which is the element's untransformed basis DOMRect relative to the viewport, plus
+ * its accumulated transform in 3 formats: css transform string, css transform's matrix3d substring, and gl-matrix mat4 array
+ *
+ * options:
+ *
+ *    bakePositionIntoTransform (default = false): remove the position info from the basis DOMRect and add it to the transform.
+ *       convenient for optimizing animations, but sometimes causes subpixel inaccuracies due to differences between
+ *       offset subpixels and transform subpixels.
+ * */
+export function getActualClientRect(element: HTMLElement, options?: ACROptions): ActualClientRect {
+  const elementInfos = disableAllTransforms(element);
+  const basis = element.getBoundingClientRect();
+  calculateDirectOffsets(elementInfos);
+  enableAllTransforms(elementInfos);
+
+  const transformMat4 = calculateTransformForBasis(basis, elementInfos);
+
+  if (options?.bakePositionIntoTransform) {
+    bakePositionIntoTransform(basis, transformMat4);
+  }
+
+  const matrix3d = convertMat4ToCssMatrix3dSubstring(transformMat4);
+  const transform = `matrix3d(${matrix3d})`;
+
+  return {
+    basis,
+    transform,
+    matrix3d,
+    transformMat4,
+  };
 }
 
-/** alias for getActualClientRect(); gets the element's actual client rect, which is a DOMRect relative to the viewport, plus its transform. */
-export function getACR(el: HTMLElement): ACR {
-  return getActualClientRect(el);
+function calculateTransformForBasis(basis: DOMRect, elementInfos: ElementInfo[]): mat4 {
+  let accumulatedTransform = mat4.create();
+  mat4.identity(accumulatedTransform);
+
+  // offsets are necessary during calculation, but must be removed afterward, so accumulate separately
+  let accumulatedOffsets = mat4.create();
+  mat4.identity(accumulatedOffsets);
+
+  // shift the frame of reference to the basis' center
+  const basisCenterMat4 = mat4.create();
+  mat4.fromTranslation(basisCenterMat4, getRectCenterVec3(basis));
+  mat4.multiply(accumulatedTransform, basisCenterMat4, accumulatedTransform);
+
+  // calculate the transform starting at the basis element and going up to document root
+  elementInfos.forEach(({ element, directOffset }, i) => {
+    // shift the frame of reference to the current element's transform-origin
+    const originMat4 = mat4.create();
+    mat4.fromTranslation(originMat4, getElementTransformOriginVec3(element));
+    mat4.invert(originMat4, originMat4);
+    mat4.multiply(accumulatedTransform, originMat4, accumulatedTransform);
+
+    // translate by the current element's offset from its direct parent
+    const offsetMat4 = mat4.create();
+    mat4.fromTranslation(offsetMat4, getRectPositionVec3(directOffset!));
+    mat4.multiply(accumulatedTransform, offsetMat4, accumulatedTransform);
+
+    // accumulate offsets
+    mat4.multiply(accumulatedOffsets, offsetMat4, accumulatedOffsets);
+
+    // pre-multiply the accumulated transform with the current element's transform
+    const transformMat4 = getElementTransformMat4(element);
+    mat4.multiply(accumulatedTransform, transformMat4, accumulatedTransform);
+
+    // unshift the frame of reference from the transform-origin
+    mat4.invert(originMat4, originMat4);
+    mat4.multiply(accumulatedTransform, originMat4, accumulatedTransform);
+
+    // flatten transform onto xy plane if not preserving 3d
+    if (!shouldElementPreserve3d(element)) {
+      accumulatedTransform[2] = 0;
+      accumulatedTransform[6] = 0;
+      accumulatedTransform[10] = 1;
+      accumulatedTransform[14] = 0;
+    }
+  });
+
+  // unshift the frame of reference from the basis' center
+  mat4.invert(basisCenterMat4, basisCenterMat4);
+  mat4.multiply(accumulatedTransform, basisCenterMat4, accumulatedTransform);
+
+  // remove the accumulated offsets to get the final accumulated transform relative to the basis
+  mat4.invert(accumulatedOffsets, accumulatedOffsets);
+  mat4.multiply(accumulatedTransform, accumulatedOffsets, accumulatedTransform);
+
+  return accumulatedTransform;
 }
 
-/** alias for getBoundingClientRect() */
-export function getBCR(el: HTMLElement): DOMRect {
-  return el.getBoundingClientRect();
+function shouldElementPreserve3d(element: HTMLElement): boolean {
+  if (!element.parentElement) return false;
+  return getComputedStyle(element.parentElement).transformStyle === "preserve-3d";
+}
+
+// for element and all ancestors, records existing inline transform into an ElementInfo, then disables with inline transform "unset"
+function disableAllTransforms(element: HTMLElement): ElementInfo[] {
+  let currentElement: HTMLElement | null = element;
+  const elementInfos: ElementInfo[] = [];
+
+  do {
+    elementInfos.push({ element: currentElement, inlineTransform: currentElement.style.transform });
+    currentElement.style.transform = "unset";
+    currentElement = currentElement!.parentElement;
+  } while (currentElement);
+
+  return elementInfos;
+}
+
+function enableAllTransforms(elementInfos: ElementInfo[]): void {
+  elementInfos.forEach((info) => {
+    info.element.style.transform = info.inlineTransform;
+  });
+}
+
+// assumes elements have transforms disabled
+function calculateDirectOffsets(elementInfos: ElementInfo[]): void {
+  elementInfos.forEach((info) => {
+    info.directOffset = getOffsetFromDirectParent(info.element);
+  });
+}
+
+// assumes element and all ancestors have transforms disabled
+function getOffsetFromDirectParent(element: HTMLElement): DOMRect {
+  const offsetRect = element.getBoundingClientRect();
+  if (element.parentElement) {
+    const parentOffsetRect = element.parentElement.getBoundingClientRect();
+    offsetRect.x -= parentOffsetRect.x;
+    offsetRect.y -= parentOffsetRect.y;
+  }
+  return offsetRect;
+}
+
+function bakePositionIntoTransform(basis: DOMRect, transformMat4: mat4): void {
+  const positionMat4 = mat4.create();
+  mat4.fromTranslation(positionMat4, getRectPositionVec3(basis));
+  mat4.multiply(transformMat4, positionMat4, transformMat4);
+  basis.x = 0;
+  basis.y = 0;
 }
