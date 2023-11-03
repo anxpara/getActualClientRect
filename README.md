@@ -39,7 +39,7 @@ function getActualClientRect(element: HTMLElement, options?: ACROptions): Actual
 ```
 
 ### Example.svelte
-
+(getActualClientRect does not require Svelte, but Svelte rocks!)
 ```svelte
 <script lang="ts">
   import { onMount } from 'svelte';
@@ -53,11 +53,11 @@ function getActualClientRect(element: HTMLElement, options?: ACROptions): Actual
     const acr = getActualClientRect(baseElement);
 
     // set or animate the element however you want. i like anime.js
-    anime.set(matchingElement, {
-      width: acr.basis.width,
-      height: acr.basis.height,
+    anime.set(matchingElement, {      
       top: acr.basis.top,
       left: acr.basis.left,
+      width: acr.basis.width,
+      height: acr.basis.height,
       matrix3d: acr.matrix3d,
     });
   });
@@ -103,3 +103,5 @@ All contributions are greatly appreciated!
 
 - [Join my Patreon](https://www.patreon.com/anxpara)
 - If you find a bug, please [file an issue](https://github.com/anxpara/getActualClientRect/issues)
+
+<3 anxpara
