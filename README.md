@@ -1,3 +1,105 @@
 # getActualClientRect
 
-get actual client rect with transform; a reverse-engineering of getBoundingClientRect()
+ALPHA
+
+```bash
+npm i actual-client-rect --save
+```
+
+## Problem
+
+It's 2023 and web developers still don't have any good options for obtaining the position and shape of an element on a page.
+
+- Most people use getBoundingClientRect, which by nature obfuscates any transforms affecting the element.
+- HTMLElement's offset api is almost useful, except that the specs require the values to be rounded to the nearest pixel, which means the api is not useful for getting subpixel-perfect results.
+- Rendering-engine-native solutions have access to any position/shape info they need, so the upcoming View Transitions API (VTAPI), for example, is very useful if it fits your use-case.
+- Some animation engines, such as Framer Motion, have solved this problem internally, but to my knowledge no library exists that provides a direct solution, until now.
+
+## Solution
+
+getActualClientRect() returns the element's basis DOMRect relative to the viewport, plus its accumulated transform in 3 formats: css transform string, css transform's matrix3d substring, and a gl-matrix mat4.
+
+### Types
+
+```ts
+type ActualClientRect = {
+  basis: DOMRect;
+  transform: string;
+  matrix3d: string;
+  transformMat4: mat4;
+};
+
+type ACROptions = {
+  // optimal for animations. sometimes causes subpixel differences due to
+  // rendering differences between offsets and transforms
+  bakePositionIntoTransform?: boolean;
+};
+
+function getActualClientRect(element: HTMLElement, options?: ACROptions): ActualClientRect;
+```
+
+### Example.svelte
+
+```svelte
+<script lang="ts">
+  import { onMount } from 'svelte';
+  import { getActualClientRect } from 'actual-client-rect';
+  import anime from 'animejs';
+
+  let baseElement: HTMLElement;
+  let matchingElement: HTMLElement;
+
+  onMount(() => {
+    const acr = getActualClientRect(baseElement);
+
+    // set or animate the element however you want. i like anime.js
+    anime.set(matchingElement, {
+      width: acr.basis.width,
+      height: acr.basis.height,
+      top: acr.basis.top,
+      left: acr.basis.left,
+      matrix3d: acr.matrix3d,
+    });
+  });
+</script>
+
+<div bind:this={baseElement} class="base" />
+<div bind:this={matchingElement} class="matching" />
+
+<style lang="scss">
+  .base {
+    position: relative;
+    top: 10em;
+    left: 10em;
+    width: 10em;
+    height: 10em;
+
+    color: yellow;
+
+    transform: rotate(15deg);
+  }
+
+  .matching {
+    position: fixed; // absolute can work in the right context
+
+    color: green;
+  }
+
+  .base, .matching {
+    outline: solid 2px;
+  }
+</style>
+```
+
+### Limitations
+
+- getActualClientRect will not attempt to match or emulate rendering engine bugs
+- perspective properties are not yet supported
+- fixed elements within a **non-viewport** containing block are not yet supported (i.e. a fixed element's ancestor has a transform, perspective, or filter)
+
+# Contribute
+
+All contributions are greatly appreciated!
+
+- [Join my Patreon](https://www.patreon.com/anxpara)
+- If you find a bug, please [file an issue](https://github.com/anxpara/getActualClientRect/issues)
