@@ -73,10 +73,10 @@ type ACROptions = {
 
   .base {
     position: relative;
-    top: 10em;
-    left: 10em;
-    width: 10em;
-    height: 10em;
+    top: 5em;
+    left: 5em;
+    width: 5em;
+    height: 5em;
 
     transform: rotate(15deg);
 
