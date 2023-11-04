@@ -22,6 +22,8 @@ getActualClientRect() returns the element's basis DOMRect relative to the viewpo
 ### Types
 
 ```ts
+function getActualClientRect(element: HTMLElement, options?: ACROptions): ActualClientRect;
+
 type ActualClientRect = {
   basis: DOMRect;
   transform: string;
@@ -34,8 +36,6 @@ type ACROptions = {
   // rendering differences between offsets and transforms
   bakePositionIntoTransform?: boolean;
 };
-
-function getActualClientRect(element: HTMLElement, options?: ACROptions): ActualClientRect;
 ```
 
 ### Example.svelte
@@ -67,6 +67,10 @@ function getActualClientRect(element: HTMLElement, options?: ACROptions): Actual
 <div bind:this={matchingElement} class="matching" />
 
 <style lang="scss">
+  .base, .matching {
+    outline: solid 2px;
+  }
+
   .base {
     position: relative;
     top: 10em;
@@ -74,19 +78,15 @@ function getActualClientRect(element: HTMLElement, options?: ACROptions): Actual
     width: 10em;
     height: 10em;
 
-    color: yellow;
-
     transform: rotate(15deg);
+
+    color: yellow;
   }
 
   .matching {
     position: fixed; // absolute can work in the right context
 
     color: green;
-  }
-
-  .base, .matching {
-    outline: solid 2px;
   }
 </style>
 ```
