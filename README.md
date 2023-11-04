@@ -90,6 +90,7 @@ type ACROptions = {
   }
 </style>
 ```
+![Example.svelte render](https://raw.githubusercontent.com/anxpara/getActualClientRect/75e76e7594f4fa3d3ead27e8272b619fdacaff1f/trialgrounds/static/images/example.png)
 
 ### Limitations
 
