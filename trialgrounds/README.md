@@ -2,6 +2,7 @@
 
 ```bash
 npm i
+npm run link
 ```
 
 # Testing
