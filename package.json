@@ -8,13 +8,15 @@
   "umd:main": "dist/umd/getActualClientRect.min.js",
   "umd:name": "getActualClientRect",
   "unpkg": "dist/umd/getActualClientRect.min.js",
-  "types": "dist/cjs/getActualClientRect.d.ts",
+  "types": "dist/es/getActualClientRect.d.ts",
   "files": [
     "dist/**"
   ],
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "bash build.bsh"
+    "build": "bash build.bsh",
+    "buildForTrials": "bash fastBuildForTrials.bsh",
+    "watch": "bash watch.bsh"
   },
   "repository": {
     "type": "git",
@@ -40,7 +42,8 @@
     "sass": "^1.69.4",
     "terser": "^5.14.2",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "watch": "^0.13.0"
   },
   "dependencies": {
     "gl-matrix": "^3.4.3"
