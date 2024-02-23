@@ -9,11 +9,12 @@ import {
 
 /**
  * an ActualClientRect is the true location, size, and shape of an element on the viewport, and is comprised of an
- * untransformed basis DOMRect, plus a transform. the transform is provided in 3 formats: css transform string,
- * css transform's matrix3d substring, and gl-matrix mat4 array
+ * untransformed basis DOMRect, a computed transform origin, and a transform. the transform is provided in 3 formats:
+ * css transform string, css transform's matrix3d substring, and gl-matrix mat4 array
  */
 export type ActualClientRect = {
   basis: DOMRect;
+  transformOrigin: string;
   transform: string;
   matrix3d: string;
   transformMat4: mat4;
@@ -35,8 +36,10 @@ type ElementInfo = {
 };
 
 /**
- * returns the element's ActualClientRect, which is the element's untransformed basis DOMRect relative to the viewport, plus
- * its accumulated transform in 3 formats: css transform string, css transform's matrix3d substring, and gl-matrix mat4 array
+ * returns the element's ActualClientRect (ACR), i.e. its true location, size, and shape on the viewport
+ *
+ * its ACR is comprised of the element's untransformed basis DOMRect, its computed transform origin, and its transform.
+ * the transform is provided in 3 formats: css transform string, css transform's matrix3d substring, and gl-matrix mat4 array
  *
  * options:
  *
@@ -47,6 +50,7 @@ type ElementInfo = {
 export function getActualClientRect(element: HTMLElement, options?: ACROptions): ActualClientRect {
   glMatrix.setMatrixArrayType(Array);
 
+  const transformOrigin = window.getComputedStyle(element).transformOrigin;
   const elementInfos = disableAllTransforms(element);
   const basis = element.getBoundingClientRect();
   calculateDirectOffsets(elementInfos);
@@ -63,6 +67,7 @@ export function getActualClientRect(element: HTMLElement, options?: ACROptions):
 
   return {
     basis,
+    transformOrigin,
     transform,
     matrix3d,
     transformMat4,
