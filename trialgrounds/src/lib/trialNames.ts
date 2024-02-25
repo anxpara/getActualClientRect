@@ -1,5 +1,6 @@
 export const TrialName = {
   Control: 'control',
+  BakePosition: 'bake-position',
   KeepInlineTransform: 'keep-inline-transform',
   SubPixel: 'sub-pixel',
   Bordered: 'bordered',

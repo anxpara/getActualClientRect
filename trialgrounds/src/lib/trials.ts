@@ -1,7 +1,7 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
-import type Matcher from '../components/Matcher.svelte';
 import { TrialName as TrialName } from './trialNames';
 import Control from '../components/trials/Control.svelte';
+import BakePosition from '../components/trials/BakePosition.svelte';
 import SubPixel from '../components/trials/SubPixel.svelte';
 import Rotated from '../components/trials/Rotated.svelte';
 import ParentRotated from '../components/trials/ParentRotated.svelte';
@@ -46,6 +46,7 @@ export type Trial = {
 
 export const allTrials: Trial[] = [
   { name: TrialName.Control, trialType: Control },
+  { name: TrialName.BakePosition, trialType: BakePosition },
   { name: TrialName.KeepInlineTransform, trialType: KeepInlineTransform },
   { name: TrialName.SubPixel, trialType: SubPixel },
   { name: TrialName.Bordered, trialType: Bordered },
