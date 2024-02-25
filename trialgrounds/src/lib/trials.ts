@@ -11,6 +11,7 @@ import Absolute from '../components/trials/Absolute.svelte';
 import Fixed from '../components/trials/Fixed.svelte';
 import Translated from '../components/trials/Translated.svelte';
 import Origin0Rotations from '../components/trials/RotationsOrigin0.svelte';
+import RotationOrigin0UseCenter from '../components/trials/RotationOrigin0UseCenter.svelte';
 import Rotations3d from '../components/trials/Rotations3d.svelte';
 import RotationsPreserve3d from '../components/trials/RotationsPreserve3d.svelte';
 import Rotations3dCountering from '../components/trials/Rotations3dCountering.svelte';
@@ -65,6 +66,7 @@ export const allTrials: Trial[] = [
   { name: TrialName.MarginedChildInRotate, trialType: MarginedChildInRotate },
   { name: TrialName.TwoRotations, trialType: TwoRotations },
   { name: TrialName.RotationsOrigin0, trialType: Origin0Rotations },
+  { name: TrialName.RotationOrigin0UseCenter, trialType: RotationOrigin0UseCenter },
   { name: TrialName.Rotations3d, trialType: Rotations3d },
   { name: TrialName.RotationsPreserve3d, trialType: RotationsPreserve3d },
   { name: TrialName.Rotations3dCountering, trialType: Rotations3dCountering },

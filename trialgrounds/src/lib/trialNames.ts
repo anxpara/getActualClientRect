@@ -19,6 +19,7 @@ export const TrialName = {
   MarginedChildInRotate: 'margined-child-in-rotate',
   TwoRotations: 'two-rotations',
   RotationsOrigin0: 'rotations-origin-0',
+  RotationOrigin0UseCenter: 'rotation-origin-0-use-center',
   Rotations3d: 'rotations-3d',
   RotationsPreserve3d: 'rotations-preserve-3d',
   Rotations3dCountering: 'rotations-3d-countering',

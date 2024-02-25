@@ -24,9 +24,12 @@ export type ActualClientRect = {
  * bakePositionIntoTransform (default = false): remove the position info from the basis DOMRect and add it to the transform.
  *    convenient for optimizing animations, but sometimes causes subpixel inaccuracies due to differences between
  *    offset subpixels and transform subpixels.
+ *
+ * useTransformOrigin: return the transform relative to the given origin on the element, rather than the element's own origin.
  */
 export type ACROptions = {
   bakePositionIntoTransform?: boolean;
+  useTransformOrigin?: string;
 };
 
 type ElementInfo = {
@@ -46,11 +49,19 @@ type ElementInfo = {
  *    bakePositionIntoTransform (default = false): remove the position info from the basis DOMRect and add it to the transform.
  *       convenient for optimizing animations, but sometimes causes subpixel inaccuracies due to differences between
  *       offset subpixels and transform subpixels.
- * */
+ *
+ *    useTransformOrigin: return the transform relative to the given origin on the element, rather than the element's own origin.
+ */
 export function getActualClientRect(element: HTMLElement, options?: ACROptions): ActualClientRect {
   glMatrix.setMatrixArrayType(Array);
 
+  const inlineTransformOrigin = element.style.transformOrigin;
+  element.style.transformOrigin = options?.useTransformOrigin ?? inlineTransformOrigin;
+
   const transformOrigin = window.getComputedStyle(element).transformOrigin;
+
+  element.style.transformOrigin = inlineTransformOrigin;
+
   const elementInfos = disableAllTransforms(element);
   const basis = element.getBoundingClientRect();
   calculateDirectOffsets(elementInfos);
