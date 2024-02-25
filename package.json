@@ -1,6 +1,6 @@
 {
   "name": "actual-client-rect",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "gets an element's actual client rect with transform. ALPHA",
   "sideEffects": false,
   "main": "dist/cjs/getActualClientRect.js",
