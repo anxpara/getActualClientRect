@@ -8,7 +8,7 @@ npm i actual-client-rect --save
 
 ## Problem
 
-It's 2023 and web developers still don't have any good options for obtaining the position and shape of an element on a page.
+It was 2023 and web developers still didn't have any good options for obtaining the position and shape of an element on a page.
 
 - Most people use getBoundingClientRect, which by nature obscures any transforms affecting the element.
 - HTMLElement's offset api is almost useful, except that the specs require the values to be rounded to the nearest pixel, which means the api is not useful for getting subpixel-perfect results.
@@ -17,7 +17,7 @@ It's 2023 and web developers still don't have any good options for obtaining the
 
 ## Solution
 
-getActualClientRect() returns the element's basis DOMRect relative to the viewport, plus its accumulated transform in 3 formats: css transform string, css transform's matrix3d substring, and a gl-matrix mat4 (row-major formatted array).
+getActualClientRect() returns the element's basis DOMRect relative to the viewport, its computed transform origin, and its accumulated transform in 3 formats: css transform string, css transform's matrix3d substring, and a gl-matrix mat4 (row-major formatted array).
 
 ### Types
 
@@ -26,6 +26,7 @@ function getActualClientRect(element: HTMLElement, options?: ACROptions): Actual
 
 type ActualClientRect = {
   basis: DOMRect;
+  transformOrigin: string;
   transform: string;
   matrix3d: string;
   transformMat4: mat4;
@@ -35,11 +36,17 @@ type ACROptions = {
   // optimal for animations. sometimes causes subpixel differences due to
   // rendering differences between offsets and transforms
   bakePositionIntoTransform?: boolean;
+
+  // return the transform relative to this origin on the element,
+  // rather than the element's own origin.
+  useTransformOrigin?: string;
 };
 ```
 
 ### Example.svelte
+
 (getActualClientRect does not require Svelte, but Svelte rocks!)
+
 ```svelte
 <script lang="ts">
   import { onMount } from 'svelte';
@@ -53,11 +60,12 @@ type ACROptions = {
     const acr = getActualClientRect(baseElement);
 
     // set or animate the element however you want. i like anime.js
-    anime.set(matchingElement, {      
+    anime.set(matchingElement, {
       top: acr.basis.top,
       left: acr.basis.left,
       width: acr.basis.width,
       height: acr.basis.height,
+      transformOrigin: acr.transformOrigin,
       matrix3d: acr.matrix3d,
     });
   });
@@ -90,6 +98,7 @@ type ACROptions = {
   }
 </style>
 ```
+
 ![Example.svelte render](https://raw.githubusercontent.com/anxpara/getActualClientRect/75e76e7594f4fa3d3ead27e8272b619fdacaff1f/trialgrounds/static/images/example.png)
 
 ### Limitations

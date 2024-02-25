@@ -25,7 +25,7 @@ export type ActualClientRect = {
  *    convenient for optimizing animations, but sometimes causes subpixel inaccuracies due to differences between
  *    offset subpixels and transform subpixels.
  *
- * useTransformOrigin: return the transform relative to the given origin on the element, rather than the element's own origin.
+ * useTransformOrigin: return the transform relative to this origin on the element, rather than the element's own origin.
  */
 export type ACROptions = {
   bakePositionIntoTransform?: boolean;
@@ -50,7 +50,7 @@ type ElementInfo = {
  *       convenient for optimizing animations, but sometimes causes subpixel inaccuracies due to differences between
  *       offset subpixels and transform subpixels.
  *
- *    useTransformOrigin: return the transform relative to the given origin on the element, rather than the element's own origin.
+ *    useTransformOrigin: return the transform relative to this origin on the element, rather than the element's own origin.
  */
 export function getActualClientRect(element: HTMLElement, options?: ACROptions): ActualClientRect {
   glMatrix.setMatrixArrayType(Array);
