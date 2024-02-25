@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { ACROptions } from 'actual-client-rect';
   import { TrialName } from '../../lib/trialNames';
 
   let trialName = TrialName.Bordered;
@@ -10,6 +11,10 @@
 
   export function getContainers(): HTMLElement[] {
     return [];
+  }
+
+  export function getACROptions(): ACROptions {
+    return {};
   }
 </script>
 

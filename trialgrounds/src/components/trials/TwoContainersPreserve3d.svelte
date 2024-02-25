@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { ACROptions } from 'actual-client-rect';
   import { TrialName } from '../../lib/trialNames';
 
   let trialName = TrialName.TwoContainersPreserve3d;
@@ -12,6 +13,10 @@
   let innerContainer: HTMLElement;
   export function getContainers(): HTMLElement[] {
     return [outerContainer, innerContainer];
+  }
+
+  export function getACROptions(): ACROptions {
+    return {};
   }
 </script>
 

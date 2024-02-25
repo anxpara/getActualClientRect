@@ -28,10 +28,12 @@ import PaddedParentRotated from '../components/trials/PaddedParentRotated.svelte
 import MarginedChildInRotate from '../components/trials/MarginedChildInRotate.svelte';
 import Bordered from '../components/trials/Bordered.svelte';
 import BorderedParentRotated from '../components/trials/BorderedParentRotated.svelte';
+import type { ACROptions } from 'actual-client-rect';
 
 export interface TrialControls {
   getTrialElement: () => HTMLElement;
   getContainers: () => HTMLElement[];
+  getACROptions: () => ACROptions;
 }
 
 export type TrialComponent = SvelteComponent & TrialControls;

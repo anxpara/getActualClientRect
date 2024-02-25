@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { ACROptions } from 'actual-client-rect';
   import { TrialName } from '../../lib/trialNames';
 
   let trialName = TrialName.Transforms3dComplicated;
@@ -11,6 +12,10 @@
   let container: HTMLElement;
   export function getContainers(): HTMLElement[] {
     return [container];
+  }
+
+  export function getACROptions(): ACROptions {
+    return {};
   }
 </script>
 

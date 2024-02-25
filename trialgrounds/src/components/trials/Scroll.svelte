@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { TrialName } from '../../lib/trialNames';
+  import type { ACROptions } from 'actual-client-rect';
 
   let trialName = TrialName.Scroll;
 
@@ -12,6 +13,10 @@
   let scroller: HTMLElement;
   export function getContainers(): HTMLElement[] {
     return [scroller];
+  }
+
+  export function getACROptions(): ACROptions {
+    return {};
   }
 
   onMount(() => {

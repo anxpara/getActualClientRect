@@ -30,7 +30,7 @@
 
     matcher.innerText = trial?.name ?? '';
 
-    const acr = getActualClientRect(element);
+    const acr = getActualClientRect(element, trial?.trialComponent?.getACROptions());
 
     if (untransformed) {
       acr.matrix3d = '';
