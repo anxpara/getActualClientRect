@@ -53,4 +53,17 @@
     color: coral;
     pointer-events: none;
   }
+
+  .matcher {
+    position: absolute;
+    font-size: 2em;
+    font-weight: 500;
+
+    top: 0;
+    left: 0;
+
+    outline: solid 2px;
+
+    color: green;
+  }
 </style>
