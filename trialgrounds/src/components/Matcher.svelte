@@ -40,6 +40,7 @@
       height: acr.basis.height,
       top: acr.basis.top,
       left: acr.basis.left,
+      transformOrigin: acr.transformOrigin,
       matrix3d: acr.matrix3d,
     });
   }

@@ -1,8 +1,8 @@
 import { glMatrix, mat4 } from "gl-matrix";
 import {
+  convertCssTransformOriginToVec3,
   convertMat4ToCssMatrix3dSubstring,
   getElementTransformMat4,
-  getRectCenterVec3,
   getElementTransformOriginVec3,
   getRectPositionVec3,
 } from "./utils/transform-utils";
@@ -56,7 +56,7 @@ export function getActualClientRect(element: HTMLElement, options?: ACROptions):
   calculateDirectOffsets(elementInfos);
   enableAllTransforms(elementInfos);
 
-  const transformMat4 = calculateTransformForBasis(basis, elementInfos);
+  const transformMat4 = calculateTransformForBasis(basis, transformOrigin, elementInfos);
 
   if (options?.bakePositionIntoTransform) {
     bakePositionIntoTransform(basis, transformMat4);
@@ -74,14 +74,14 @@ export function getActualClientRect(element: HTMLElement, options?: ACROptions):
   };
 }
 
-function calculateTransformForBasis(basis: DOMRect, elementInfos: ElementInfo[]): mat4 {
+function calculateTransformForBasis(basis: DOMRect, transformOrigin: string, elementInfos: ElementInfo[]): mat4 {
   let accumulatedTransform = mat4.create();
   mat4.identity(accumulatedTransform);
 
-  // shift the frame of reference to the basis' center
-  const basisCenterMat4 = mat4.create();
-  mat4.fromTranslation(basisCenterMat4, getRectCenterVec3(basis));
-  mat4.multiply(accumulatedTransform, basisCenterMat4, accumulatedTransform);
+  // shift the frame of reference to subject's transform origin
+  const subjectOriginMat4 = mat4.create();
+  mat4.fromTranslation(subjectOriginMat4, convertCssTransformOriginToVec3(transformOrigin));
+  mat4.multiply(accumulatedTransform, subjectOriginMat4, accumulatedTransform);
 
   // calculate the transform starting at the basis element and going up to document root
   elementInfos.forEach(({ element, directOffset }, i) => {
@@ -113,9 +113,9 @@ function calculateTransformForBasis(basis: DOMRect, elementInfos: ElementInfo[])
     }
   });
 
-  // unshift the frame of reference from the basis' center
-  mat4.invert(basisCenterMat4, basisCenterMat4);
-  mat4.multiply(accumulatedTransform, basisCenterMat4, accumulatedTransform);
+  // unshift the frame of reference from the subject's transform origin
+  mat4.invert(subjectOriginMat4, subjectOriginMat4);
+  mat4.multiply(accumulatedTransform, subjectOriginMat4, accumulatedTransform);
 
   // subtract the basis' position to get the final accumulated transform relative to the basis
   const basisPositionMat4 = mat4.create();

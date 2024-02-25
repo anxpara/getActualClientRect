@@ -10,7 +10,11 @@ export function getRectCenterVec3(rect: DOMRect): vec3 {
 
 export function getElementTransformOriginVec3(element: HTMLElement): vec3 {
   const origin = window.getComputedStyle(element).transformOrigin;
-  const originValues = origin.split(" ").map((str) => Number.parseFloat(str));
+  return convertCssTransformOriginToVec3(origin);
+}
+
+export function convertCssTransformOriginToVec3(transformOrigin: string): vec3 {
+  const originValues = transformOrigin.split(" ").map((str) => Number.parseFloat(str));
   return vec3.fromValues(originValues[0], originValues[1], originValues.length > 2 ? originValues[2] : 0);
 }
 
