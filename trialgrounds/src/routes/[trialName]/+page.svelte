@@ -25,18 +25,18 @@
   {/if}
 </div>
 <div class="matcher-container">
-  <Matcher element={trial.trialComponent?.getTrialElement()} trialName={trial.name} {matchOnce} />
+  <Matcher element={trial.trialComponent?.getTrialElement()} {trial} {matchOnce} />
   {#if data.showUntransformedRect}
     <Matcher
       element={trial.trialComponent?.getTrialElement()}
-      trialName={''}
+      trial={undefined}
       untransformed={true}
       {matchOnce}
     />
   {/if}
   {#if data.showUntransformedContainers}
     {#each trial.trialComponent?.getContainers() ?? [] as container}
-      <Matcher element={container} trialName={''} untransformed={true} {matchOnce} />
+      <Matcher element={container} trial={undefined} untransformed={true} {matchOnce} />
     {/each}
   {/if}
 </div>

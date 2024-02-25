@@ -2,9 +2,10 @@
   import anime from 'animejs';
   import { getActualClientRect } from 'actual-client-rect';
   import { onDestroy, onMount, tick } from 'svelte';
+  import type { Trial } from '$lib/trials';
 
   export let element: HTMLElement | undefined;
-  export let trialName: string;
+  export let trial: Trial | undefined;
   export let untransformed = false;
   export let matchOnce = false;
   let matcher: HTMLElement;
@@ -27,7 +28,7 @@
   export function match(): void {
     if (!element) return;
 
-    matcher.innerText = trialName;
+    matcher.innerText = trial?.name ?? '';
 
     const acr = getActualClientRect(element);
 
