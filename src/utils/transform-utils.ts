@@ -1,4 +1,4 @@
-import { mat4, vec3 } from "gl-matrix";
+import { mat4, vec3 } from 'gl-matrix';
 
 export function getRectPositionVec3(rect: DOMRect): vec3 {
   return vec3.fromValues(rect.left, rect.top, 0);
@@ -14,8 +14,12 @@ export function getElementTransformOriginVec3(element: HTMLElement): vec3 {
 }
 
 export function convertCssTransformOriginToVec3(transformOrigin: string): vec3 {
-  const originValues = transformOrigin.split(" ").map((str) => Number.parseFloat(str));
-  return vec3.fromValues(originValues[0], originValues[1], originValues.length > 2 ? originValues[2] : 0);
+  const originValues = transformOrigin.split(' ').map((str) => Number.parseFloat(str));
+  return vec3.fromValues(
+    originValues[0],
+    originValues[1],
+    originValues.length > 2 ? originValues[2] : 0,
+  );
 }
 
 // prettier-ignore
@@ -44,11 +48,11 @@ export function getElementTransformMat4(element: HTMLElement): mat4 {
 }
 
 function convertCssTransformToArray(transform: string): string[] | null {
-  if (transform === "none") return null;
+  if (transform === 'none') return null;
 
-  let values = transform.split("(")[1];
-  values = values.split(")")[0];
-  return values.split(", ");
+  let values = transform.split('(')[1];
+  values = values.split(')')[0];
+  return values.split(', ');
 }
 
 function convert3x2TransformArrayTo4x4(cssTransformArray: string[]): string[] {
@@ -77,7 +81,7 @@ export function convertCssTransformArrayToMat4(cssMatrix: string[]): mat4 {
 
 export function convertMat4ToCssMatrix3dSubstring(mat: mat4): string {
   let str = mat4.str(mat);
-  str = str.split("(")[1];
-  str = str.split(")")[0];
+  str = str.split('(')[1];
+  str = str.split(')')[0];
   return str;
 }

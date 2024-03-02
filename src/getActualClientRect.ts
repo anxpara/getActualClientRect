@@ -1,11 +1,11 @@
-import { glMatrix, mat4 } from "gl-matrix";
+import { glMatrix, mat4 } from 'gl-matrix';
 import {
   convertCssTransformOriginToVec3,
   convertMat4ToCssMatrix3dSubstring,
   getElementTransformMat4,
   getElementTransformOriginVec3,
   getRectPositionVec3,
-} from "./utils/transform-utils";
+} from './utils/transform-utils';
 
 /**
  * an ActualClientRect is the true location, size, and shape of an element on the viewport, and is comprised of an
@@ -85,7 +85,11 @@ export function getActualClientRect(element: HTMLElement, options?: ACROptions):
   };
 }
 
-function calculateTransformForBasis(basis: DOMRect, transformOrigin: string, elementInfos: ElementInfo[]): mat4 {
+function calculateTransformForBasis(
+  basis: DOMRect,
+  transformOrigin: string,
+  elementInfos: ElementInfo[],
+): mat4 {
   let accumulatedTransform = mat4.create();
   mat4.identity(accumulatedTransform);
 
@@ -139,7 +143,7 @@ function calculateTransformForBasis(basis: DOMRect, transformOrigin: string, ele
 
 function shouldElementPreserve3d(element: HTMLElement): boolean {
   if (!element.parentElement) return false;
-  return getComputedStyle(element.parentElement).transformStyle === "preserve-3d";
+  return getComputedStyle(element.parentElement).transformStyle === 'preserve-3d';
 }
 
 // for element and all ancestors, records existing inline transform into an ElementInfo, then disables with inline transform "unset"
@@ -149,7 +153,7 @@ function disableAllTransforms(element: HTMLElement): ElementInfo[] {
 
   do {
     elementInfos.push({ element: currentElement, inlineTransform: currentElement.style.transform });
-    currentElement.style.transform = "unset";
+    currentElement.style.transform = 'unset';
     currentElement = currentElement!.parentElement;
   } while (currentElement);
 
