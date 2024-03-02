@@ -30,6 +30,10 @@
   ],
   "author": "anxpara anx@anxpara.com",
   "license": "MIT",
+  "funding": {
+    "type": "patreon",
+    "url": "https://www.patreon.com/anxpara"
+  },
   "bugs": {
     "url": "https://github.com/anxpara/getActualClientRect/issues"
   },
