@@ -7,6 +7,7 @@ export const TrialName = {
   BorderedParentRotated: 'bordered-parent-rotated',
   Relative: 'relative',
   Absolute: 'absolute',
+  AbsoluteInTransform: 'absolute-in-transform',
   Fixed: 'fixed',
   FixedInTransform: 'fixed-in-transform',
   Scroll: 'scroll',

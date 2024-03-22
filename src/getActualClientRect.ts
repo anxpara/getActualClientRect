@@ -36,6 +36,7 @@ type ElementInfo = {
   element: HTMLElement;
   inlineTransform: string;
   directOffset?: DOMRect;
+  computedStyle: CSSStyleDeclaration;
 };
 
 /**
@@ -120,7 +121,8 @@ function calculateTransformForBasis(
     mat4.multiply(accumulatedTransform, originMat4, accumulatedTransform);
 
     // flatten transform onto xy plane if not preserving 3d
-    if (!shouldElementPreserve3d(element)) {
+    const parentInfo = i < elementInfos.length ? elementInfos[i + 1] : undefined;
+    if (!shouldElementPreserve3d(parentInfo)) {
       accumulatedTransform[2] = 0;
       accumulatedTransform[6] = 0;
       accumulatedTransform[10] = 1;
@@ -141,20 +143,27 @@ function calculateTransformForBasis(
   return accumulatedTransform;
 }
 
-function shouldElementPreserve3d(element: HTMLElement): boolean {
-  if (!element.parentElement) return false;
-  return getComputedStyle(element.parentElement).transformStyle === 'preserve-3d';
+function shouldElementPreserve3d(parentInfo: ElementInfo | undefined): boolean {
+  if (!parentInfo) return false;
+  return parentInfo.computedStyle.transformStyle === 'preserve-3d';
 }
 
-// for element and all ancestors, records existing inline transform into an ElementInfo, then disables with inline transform "unset"
+// for element and all ancestors, records inline transform value into an ElementInfo
+// then disables existing transforms by setting to identity matrix
 function disableAllTransforms(element: HTMLElement): ElementInfo[] {
   let currentElement: HTMLElement | null = element;
   const elementInfos: ElementInfo[] = [];
 
   do {
-    elementInfos.push({ element: currentElement, inlineTransform: currentElement.style.transform });
-    currentElement.style.transform = 'unset';
-    currentElement = currentElement!.parentElement;
+    const computedStyle = getComputedStyle(currentElement);
+    elementInfos.push({
+      element: currentElement,
+      inlineTransform: currentElement.style.transform,
+      computedStyle,
+    });
+    const hasTransform = computedStyle.transform !== 'none';
+    if (hasTransform) currentElement.style.transform = 'matrix(1, 0, 0, 1, 0, 0)';
+    currentElement = currentElement.parentElement;
   } while (currentElement);
 
   return elementInfos;

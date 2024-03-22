@@ -30,6 +30,7 @@ import MarginedChildInRotate from '../components/trials/MarginedChildInRotate.sv
 import Bordered from '../components/trials/Bordered.svelte';
 import BorderedParentRotated from '../components/trials/BorderedParentRotated.svelte';
 import type { ACROptions } from 'actual-client-rect';
+import AbsoluteInTransform from '../components/trials/AbsoluteInTransform.svelte';
 
 export interface TrialControls {
   getTrialElement: () => HTMLElement;
@@ -54,6 +55,7 @@ export const allTrials: Trial[] = [
   { name: TrialName.BorderedParentRotated, trialType: BorderedParentRotated },
   { name: TrialName.Relative, trialType: Relative },
   { name: TrialName.Absolute, trialType: Absolute },
+  { name: TrialName.AbsoluteInTransform, trialType: AbsoluteInTransform },
   { name: TrialName.Fixed, trialType: Fixed },
   { name: TrialName.FixedInTransform, trialType: FixedInTransform },
   { name: TrialName.Scroll, trialType: Scroll },
