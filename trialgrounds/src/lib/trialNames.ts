@@ -10,6 +10,7 @@ export const TrialName = {
   AbsoluteInTransform: 'absolute-in-transform',
   Fixed: 'fixed',
   FixedInTransform: 'fixed-in-transform',
+  FixedInFilter: 'fixed-in-filter',
   Scroll: 'scroll',
   ScrollInRotate: 'scroll-in-rotate',
   Sticky: 'sticky',

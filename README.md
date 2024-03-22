@@ -105,7 +105,6 @@ type ACROptions = {
 
 - getActualClientRect will not attempt to match or emulate rendering engine bugs
 - perspective properties are not yet supported
-- fixed elements within a **non-viewport** containing block are not yet supported (i.e. a fixed element's ancestor has a transform, perspective, or filter)
 
 # Contribute
 

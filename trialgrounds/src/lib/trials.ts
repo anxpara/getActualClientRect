@@ -31,6 +31,7 @@ import Bordered from '../components/trials/Bordered.svelte';
 import BorderedParentRotated from '../components/trials/BorderedParentRotated.svelte';
 import type { ACROptions } from 'actual-client-rect';
 import AbsoluteInTransform from '../components/trials/AbsoluteInTransform.svelte';
+import FixedInFilter from '../components/trials/FixedInFilter.svelte';
 
 export interface TrialControls {
   getTrialElement: () => HTMLElement;
@@ -58,6 +59,7 @@ export const allTrials: Trial[] = [
   { name: TrialName.AbsoluteInTransform, trialType: AbsoluteInTransform },
   { name: TrialName.Fixed, trialType: Fixed },
   { name: TrialName.FixedInTransform, trialType: FixedInTransform },
+  { name: TrialName.FixedInFilter, trialType: FixedInFilter },
   { name: TrialName.Scroll, trialType: Scroll },
   { name: TrialName.ScrollInRotate, trialType: ScrollInRotate },
   { name: TrialName.Sticky, trialType: Sticky },
