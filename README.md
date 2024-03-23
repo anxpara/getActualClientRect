@@ -11,8 +11,7 @@ npm i actual-client-rect --save
 It was 2023 and web developers still didn't have any good options for obtaining the position and shape of an element on a page.
 
 - Most people use getBoundingClientRect, which by nature obscures any transforms affecting the element.
-- HTMLElement's offset api is almost useful, except that the specs require the values to be rounded to the nearest pixel, which means the api is not useful for getting subpixel-perfect results.
-- Rendering-engine-native solutions have access to any position/shape info they need, so the upcoming View Transitions API (VTAPI), for example, is very useful if it fits your use-case.
+- HTMLElement's offset api is almost useful, except that the specs require the values to be rounded to the nearest pixel.
 - At least one library (Framer Motion) has solved this problem internally, but to my knowledge no library exists that provides a direct solution, until now.
 
 ## Solution
