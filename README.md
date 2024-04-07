@@ -109,7 +109,8 @@ type ACROptions = {
 
 All contributions are greatly appreciated!
 
-- [Join my Patreon](https://www.patreon.com/anxpara)
+- Feedback, feature requests, and help requests can be posted to the [Projectrix Discord](https://discord.gg/YxVAUFqW4e)
 - If you find a bug, please [file an issue](https://github.com/anxpara/getActualClientRect/issues)
+- [Join my Patreon](https://www.patreon.com/anxpara)
 
 <3 anxpara
