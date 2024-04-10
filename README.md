@@ -50,24 +50,24 @@ type ACROptions = {
 <script lang="ts">
   import { onMount } from 'svelte';
   import { getActualClientRect } from 'actual-client-rect';
-  import anime from 'animejs';
 
   let baseElement: HTMLElement;
   let matchingElement: HTMLElement;
 
   onMount(() => {
+    match();
+  });
+
+  function match(): void {
     const acr = getActualClientRect(baseElement);
 
-    // set or animate the element however you want. i like anime.js
-    anime.set(matchingElement, {
-      top: acr.basis.top,
-      left: acr.basis.left,
-      width: acr.basis.width,
-      height: acr.basis.height,
-      transformOrigin: acr.transformOrigin,
-      matrix3d: acr.matrix3d,
-    });
-  });
+    matchingElement.style.left = `${acr.basis.left}px`;
+    matchingElement.style.top = `${acr.basis.top}px`;
+    matchingElement.style.width = `${acr.basis.width}px`;
+    matchingElement.style.height = `${acr.basis.height}px`;
+    matchingElement.style.transformOrigin = acr.transformOrigin;
+    matchingElement.style.transform = acr.transform;
+  }
 </script>
 
 <div bind:this={baseElement} class="base" />
@@ -91,7 +91,7 @@ type ACROptions = {
   }
 
   .matching {
-    position: fixed; // absolute can work in the right context
+    position: fixed; // absolute works if offset parent is flush with viewport
 
     color: green;
   }
