@@ -102,8 +102,10 @@ type ACROptions = {
 
 ### Limitations
 
-- getActualClientRect will not attempt to match or emulate rendering engine bugs
+- getActualClientRect will not attempt to match, emulate, or mitigate bugs in rendering engines
+  - [Stackoverflow: -webkit-transform-style: preserve-3d not working](https://stackoverflow.com/questions/11664255/webkit-transform-style-preserve-3d-not-working)
 - perspective properties are not yet supported
+- performance has not yet been profiled
 
 # Contribute
 
