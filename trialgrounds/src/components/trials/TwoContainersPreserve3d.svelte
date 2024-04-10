@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { ACROptions } from 'actual-client-rect';
-  import { TrialName } from '../../lib/trialNames';
+  import type { Trial } from '$lib/trials';
 
-  let trialName = TrialName.TwoContainersPreserve3d;
+  export let trial: Trial;
 
   let trialElement: HTMLElement;
   export function getTrialElement(): HTMLElement {
@@ -20,14 +20,14 @@
   }
 </script>
 
-<div bind:this={outerContainer} class="trial-container {trialName}-outer-container">
-  <div bind:this={innerContainer} class="trial-container {trialName}-inner-container">
-    <div bind:this={trialElement} class="trial-element {trialName}">{trialName}</div>
+<div bind:this={outerContainer} class="trial-container outer-container">
+  <div bind:this={innerContainer} class="trial-container inner-container">
+    <div bind:this={trialElement} class="trial-element">{trial.name}</div>
   </div>
 </div>
 
 <style lang="scss">
-  .two-containers-preserve-3d-outer-container {
+  .outer-container {
     width: fit-content;
     height: fit-content;
     padding: 1em;
@@ -35,7 +35,7 @@
     -webkit-transform-style: preserve-3d;
     transform: rotateY(65deg);
 
-    .two-containers-preserve-3d-inner-container {
+    .inner-container {
       width: fit-content;
       height: fit-content;
       padding: 1em;
@@ -43,7 +43,7 @@
       -webkit-transform-style: preserve-3d;
       transform: rotateY(253deg);
 
-      .two-containers-preserve-3d {
+      .trial-element {
         transform: rotateY(25deg);
       }
     }

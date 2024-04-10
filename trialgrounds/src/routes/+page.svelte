@@ -23,7 +23,7 @@
 <div class="all-trials-container">
   {#each trials as trial}
     <a href="/{trial.name}{$page.url.search}">
-      <svelte:component this={trial.trialType} bind:this={trial.trialComponent} />
+      <svelte:component this={trial.trialType} bind:this={trial.trialComponent} {trial} />
     </a>
   {/each}
 </div>

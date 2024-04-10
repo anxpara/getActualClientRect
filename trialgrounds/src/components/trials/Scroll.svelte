@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { TrialName } from '../../lib/trialNames';
+  import type { Trial } from '$lib/trials';
   import type { ACROptions } from 'actual-client-rect';
 
-  let trialName = TrialName.Scroll;
+  export let trial: Trial;
 
   let trialElement: HTMLElement;
   export function getTrialElement(): HTMLElement {
@@ -25,14 +25,14 @@
   });
 </script>
 
-<div bind:this={scroller} class="trial-container {trialName}-container">
+<div bind:this={scroller} class="trial-container">
   <div class="filler">
-    <div bind:this={trialElement} class="trial-element {trialName}">{trialName}</div>
+    <div bind:this={trialElement} class="trial-element">{trial.name}</div>
   </div>
 </div>
 
 <style lang="scss">
-  .scroll-container {
+  .trial-container {
     overflow: scroll;
 
     .filler {

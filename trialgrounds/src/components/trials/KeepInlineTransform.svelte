@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { ACROptions } from 'actual-client-rect';
-  import { TrialName } from '../../lib/trialNames';
+  import type { Trial } from '$lib/trials';
 
-  let trialName = TrialName.KeepInlineTransform;
+  export let trial: Trial;
 
   let trialElement: HTMLElement;
   export function getTrialElement(): HTMLElement {
@@ -19,33 +19,29 @@
   }
 </script>
 
-<div class="trial-container">
-  <div class="trial-container {trialName}-container-fail" style="transform: rotate(15deg);" />
+<div class="trial-container outer-container">
+  <div class="trial-container inner-container-fail" style="transform: rotate(15deg);" />
   <div
     bind:this={container}
-    class="trial-container {trialName}-container"
+    class="trial-container inner-container"
     style="transform: rotate(15deg);"
   >
-    <div class="trial-element {trialName}" style="transform: rotate(15deg);">{trialName}</div>
-    <div
-      bind:this={trialElement}
-      class="trial-element {trialName}"
-      style="transform: rotate(15deg);"
-    >
-      {trialName}
+    <div class="trial-element" style="transform: rotate(15deg);">{trial.name}</div>
+    <div bind:this={trialElement} class="trial-element" style="transform: rotate(15deg);">
+      {trial.name}
     </div>
   </div>
 </div>
 
 <style lang="scss">
-  .keep-inline-transform-container-fail {
+  .inner-container-fail {
     position: absolute;
     color: red;
   }
-  .keep-inline-transform-container {
+  .inner-container {
     position: absolute;
 
-    .keep-inline-transform {
+    .trial-element {
       position: absolute;
     }
   }

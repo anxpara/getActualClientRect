@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { TrialName } from '../../lib/trialNames';
+  import type { Trial } from '$lib/trials';
   import type { ACROptions } from 'actual-client-rect';
 
-  let trialName = TrialName.Sticky;
+  export let trial: Trial;
 
   let trialElement: HTMLElement;
   export function getTrialElement(): HTMLElement {
@@ -24,14 +24,14 @@
   });
 </script>
 
-<div bind:this={scroller} class="trial-container {trialName}-container">
+<div bind:this={scroller} class="trial-container">
   <div class="spacer" />
-  <div bind:this={trialElement} class="trial-element {trialName}">{trialName}</div>
+  <div bind:this={trialElement} class="trial-element">{trial.name}</div>
   <div class="spacer" />
 </div>
 
 <style lang="scss">
-  .sticky-container {
+  .trial-container {
     position: relative;
     overflow: scroll;
     outline: none;
@@ -43,7 +43,7 @@
       border: solid 1px coral;
     }
 
-    .sticky {
+    .trial-element {
       position: sticky;
       top: 2px;
       left: 2px;

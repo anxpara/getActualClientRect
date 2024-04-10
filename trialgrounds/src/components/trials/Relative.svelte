@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { ACROptions } from 'actual-client-rect';
-  import { TrialName } from '../../lib/trialNames';
+  import type { Trial } from '$lib/trials';
 
-  let trialName = TrialName.Relative;
+  export let trial: Trial;
 
   let trialElement: HTMLElement;
   export function getTrialElement(): HTMLElement {
@@ -18,10 +18,10 @@
   }
 </script>
 
-<div bind:this={trialElement} class="trial-element {trialName}">{trialName}</div>
+<div bind:this={trialElement} class="trial-element">{trial.name}</div>
 
 <style lang="scss">
-  .relative {
+  .trial-element {
     position: relative;
     top: 1em;
     left: 1em;

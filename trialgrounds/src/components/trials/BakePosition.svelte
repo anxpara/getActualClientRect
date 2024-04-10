@@ -1,8 +1,8 @@
 <script lang="ts">
+  import type { Trial } from '$lib/trials';
   import type { ACROptions } from 'actual-client-rect';
-  import { TrialName } from '../../lib/trialNames';
 
-  let trialName = TrialName.BakePosition;
+  export let trial: Trial;
 
   let trialElement: HTMLElement;
   export function getTrialElement(): HTMLElement {
@@ -18,4 +18,4 @@
   }
 </script>
 
-<div bind:this={trialElement} class="trial-element {trialName}">{trialName}</div>
+<div bind:this={trialElement} class="trial-element">{trial.name}</div>

@@ -21,7 +21,7 @@
 
 <div class="lone-trial-container">
   {#if trial}
-    <svelte:component this={trial.trialType} bind:this={trial.trialComponent} />
+    <svelte:component this={trial.trialType} bind:this={trial.trialComponent} {trial} />
   {/if}
 </div>
 <div class="matcher-container">

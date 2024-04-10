@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { ACROptions } from 'actual-client-rect';
-  import { TrialName } from '../../lib/trialNames';
+  import type { Trial } from '$lib/trials';
 
-  let trialName = TrialName.Rotations3dCountering;
+  export let trial: Trial;
 
   let trialElement: HTMLElement;
   export function getTrialElement(): HTMLElement {
@@ -19,17 +19,17 @@
   }
 </script>
 
-<div bind:this={container} class="trial-container {trialName}-container">
-  <div bind:this={trialElement} class="trial-element {trialName}">{trialName}</div>
+<div bind:this={container} class="trial-container">
+  <div bind:this={trialElement} class="trial-element">{trial.name}</div>
 </div>
 
 <style lang="scss">
-  .rotations-3d-countering-container {
+  .trial-container {
     width: fit-content;
     height: fit-content;
     transform: rotateY(45deg);
 
-    .rotations-3d-countering {
+    .trial-element {
       transform: rotateY(-45deg);
     }
   }

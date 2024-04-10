@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { TrialName } from '../../lib/trialNames';
+  import type { Trial } from '$lib/trials';
   import type { ACROptions } from 'actual-client-rect';
 
-  let trialName = TrialName.ScrollInRotate;
+  export let trial: Trial;
 
   let trialElement: HTMLElement;
   export function getTrialElement(): HTMLElement {
@@ -26,19 +26,19 @@
   });
 </script>
 
-<div bind:this={container} class="rotate-container">
-  <div bind:this={scroller} class="trial-container {trialName}-container">
+<div bind:this={container} class="outer-container">
+  <div bind:this={scroller} class="trial-container inner-container">
     <div class="filler">
-      <div bind:this={trialElement} class="trial-element {trialName}">{trialName}</div>
+      <div bind:this={trialElement} class="trial-element">{trial.name}</div>
     </div>
   </div>
 </div>
 
 <style lang="scss">
-  .rotate-container {
+  .outer-container {
     transform: rotate(15deg);
 
-    .scroll-in-rotate-container {
+    .inner-container {
       overflow: scroll;
 
       .filler {
