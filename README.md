@@ -10,28 +10,28 @@ npm i actual-client-rect --save
 
 It was 2023 and web developers still didn't have any good options for obtaining the position and shape of an element on a page.
 
-- Most people use getBoundingClientRect, which by nature obscures any transforms affecting the element.
-- HTMLElement's offset api is almost useful, except that the specs require the values to be rounded to the nearest pixel.
-- At least one library (Framer Motion) has solved this problem internally, but to my knowledge no library exists that provides a direct solution, until now.
+- People often use **getBoundingClientRect()**, which by nature obscures any transforms affecting the element.
+- HTMLElement's offset api is annoying to work with, and the specs require the values to be rounded to the nearest pixel.
+- Some libraries may have solved this problem internally, but to my knowledge no library exists that provides a direct solution, until now.
 
 ## Solution
 
-getActualClientRect() returns the element's basis DOMRect relative to the viewport, its computed transform origin, and its accumulated transform in 3 formats: css transform string, css transform's matrix3d substring, and a gl-matrix mat4 (row-major formatted array).
+**getActualClientRect()** returns the element's basis DOMRect relative to the viewport, its computed transform origin, and its accumulated transform in 3 formats: css transform string, css transform's matrix3d substring, and a glMatrix mat4
 
-### Types
+### API / Types / Documentation
 
 ```ts
-function getActualClientRect(element: HTMLElement, options?: ACROptions): ActualClientRect;
+export function getActualClientRect(element: HTMLElement, options?: ACROptions): ActualClientRect;
 
-type ActualClientRect = {
+export type ActualClientRect = {
   basis: DOMRect;
   transformOrigin: string;
-  transform: string;
+  transform: string; // `matrix3d(${matrix3d})`
   matrix3d: string;
-  transformMat4: mat4;
+  transformMat4: mat4; // row-major formatted array
 };
 
-type ACROptions = {
+export type ACROptions = {
   // optimal for animations. sometimes causes subpixel differences due to
   // rendering differences between offsets and transforms
   bakePositionIntoTransform?: boolean;
