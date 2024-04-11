@@ -48,6 +48,9 @@ import NoPreserve3dWithContentVisAuto from '../components/trials/NoPreserve3dWit
 import NoPreserve3dWithWillChangeOpacity from '../components/trials/NoPreserve3dWithWillChangeOpacity.svelte';
 import NoPreserve3dWithWillChangeFilter from '../components/trials/NoPreserve3dWithWillChangeFilter.svelte';
 import NoPreserve3dWithBackdropFilter from '../components/trials/NoPreserve3dWithBackdropFilter.svelte';
+import PerspectiveFunc from '../components/trials/PerspectiveFunc.svelte';
+import Perspective from '../components/trials/Perspective.svelte';
+import PerspectiveOrigin from '../components/trials/PerspectiveOrigin.svelte';
 
 export interface TrialControls {
   getTrialElement: () => HTMLElement;
@@ -114,6 +117,9 @@ export const allTrials: Trial[] = [
   },
   { name: TrialName.NoPreserve3dWithWillChangeFilter, trialType: NoPreserve3dWithWillChangeFilter },
   { name: TrialName.NoPreserve3dWithBackdropFilter, trialType: NoPreserve3dWithBackdropFilter },
+  { name: TrialName.PerspectiveFunc, trialType: PerspectiveFunc },
+  { name: TrialName.Perspective, trialType: Perspective },
+  { name: TrialName.PerspectiveOrigin, trialType: PerspectiveOrigin },
 ];
 export const trialsByName = new Map<TrialName, Trial>(
   allTrials.map((trial) => [trial.name, trial]),

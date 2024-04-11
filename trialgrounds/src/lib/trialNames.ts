@@ -46,6 +46,9 @@ export const TrialName = {
   NoPreserve3dWithWillChangeOpacity: 'no-preserve3d-with-willchange-opacity',
   NoPreserve3dWithWillChangeFilter: 'no-preserve3d-with-willchange-filter',
   NoPreserve3dWithBackdropFilter: 'no-preserve3d-with-backdrop-filter',
+  PerspectiveFunc: 'perspective-func',
+  Perspective: 'perspective',
+  PerspectiveOrigin: 'perspective-origin',
 } as const;
 export type TrialName = (typeof TrialName)[keyof typeof TrialName];
 export const trialNames: string[] = Object.values(TrialName);
