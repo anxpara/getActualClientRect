@@ -103,7 +103,10 @@ export type ACROptions = {
 ### Limitations
 
 - getActualClientRect will not attempt to match, emulate, or mitigate bugs in rendering engines
-  - [Stackoverflow: -webkit-transform-style: preserve-3d not working](https://stackoverflow.com/questions/11664255/webkit-transform-style-preserve-3d-not-working)
+  - [stackoverflow: -webkit-transform-style: preserve-3d not working](https://stackoverflow.com/questions/11664255/webkit-transform-style-preserve-3d-not-working)
+  - some engines don't follow the [preserve-3d _used_ value specs](https://www.w3.org/TR/css-transforms-2/#grouping-property-values), and still use preserve-3d even when combined with certain grouping properties:
+    - Chrome v123 / Blink -- contain: strict, content, and paint | content-visibility: auto
+    - Firefox v124 / Gecko -- will-change: filter | (mask-border-source [not supported](https://caniuse.com/?search=mask-border)) | (content-visibility requires [about:config setting](https://caniuse.com/?search=content-visibility))
 - perspective properties are not yet supported
 - performance has not yet been profiled
 
