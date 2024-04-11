@@ -30,6 +30,22 @@ export const TrialName = {
   TransformsPreserve3dComplicated: 'transforms-preserve-3d-complicated',
   TwoContainersPreserve3d: 'two-containers-preserve-3d',
   OuterContainerPreserve3d: 'outer-container-preserve-3d',
+  NoPreserve3dWithOverflow: 'no-preserve3d-with-overflow',
+  NoPreserve3dWithOpacity: 'no-preserve3d-with-opacity',
+  NoPreserve3dWithFilter: 'no-preserve3d-with-filter',
+  NoPreserve3dWithClipPath: 'no-preserve3d-with-clip-path',
+  NoPreserve3dWithIsolation: 'no-preserve3d-with-isolation',
+  NoPreserve3dWithMaskImage: 'no-preserve3d-with-mask-image',
+  NoPreserve3dWithMaskBorderSource: 'no-preserve3d-with-mask-border-source',
+  NoPreserve3dWithMixBlend: 'no-preserve3d-with-mix-blend',
+  NoPreserve3dWithContainStrict: 'no-preserve3d-with-contain-strict',
+  NoPreserve3dWithContainContent: 'no-preserve3d-with-contain-content',
+  NoPreserve3dWithContainPaint: 'no-preserve3d-with-contain-paint',
+  NoPreserve3dWithContentVisHidden: 'no-preserve3d-with-content-vis-hidden',
+  NoPreserve3dWithContentVisAuto: 'no-preserve3d-with-content-vis-auto',
+  NoPreserve3dWithWillChangeOpacity: 'no-preserve3d-with-willchange-opacity',
+  NoPreserve3dWithWillChangeFilter: 'no-preserve3d-with-willchange-filter',
+  NoPreserve3dWithBackdropFilter: 'no-preserve3d-with-backdrop-filter',
 } as const;
 export type TrialName = (typeof TrialName)[keyof typeof TrialName];
 export const trialNames: string[] = Object.values(TrialName);

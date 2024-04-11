@@ -32,6 +32,22 @@ import BorderedParentRotated from '../components/trials/BorderedParentRotated.sv
 import type { ACROptions } from 'actual-client-rect';
 import AbsoluteInTransform from '../components/trials/AbsoluteInTransform.svelte';
 import FixedInFilter from '../components/trials/FixedInFilter.svelte';
+import NoPreserve3dWithOverflow from '../components/trials/NoPreserve3dWithOverflow.svelte';
+import NoPreserve3dWithOpacity from '../components/trials/NoPreserve3dWithOpacity.svelte';
+import NoPreserve3dWithFilter from '../components/trials/NoPreserve3dWithFilter.svelte';
+import NoPreserve3dWithClipPath from '../components/trials/NoPreserve3dWithClipPath.svelte';
+import NoPreserve3dWithIsolation from '../components/trials/NoPreserve3dWithIsolation.svelte';
+import NoPreserve3dWithMaskImage from '../components/trials/NoPreserve3dWithMaskImage.svelte';
+import NoPreserve3dWithMaskBorderSource from '../components/trials/NoPreserve3dWithMaskBorderSource.svelte';
+import NoPreserve3dWithMixBlend from '../components/trials/NoPreserve3dWithMixBlend.svelte';
+import NoPreserve3dWithContainStrict from '../components/trials/NoPreserve3dWithContainStrict.svelte';
+import NoPreserve3dWithContainContent from '../components/trials/NoPreserve3dWithContainContent.svelte';
+import NoPreserve3dWithContainPaint from '../components/trials/NoPreserve3dWithContainPaint.svelte';
+import NoPreserve3dWithContentVisHidden from '../components/trials/NoPreserve3dWithContentVisHidden.svelte';
+import NoPreserve3dWithContentVisAuto from '../components/trials/NoPreserve3dWithContentVisAuto.svelte';
+import NoPreserve3dWithWillChangeOpacity from '../components/trials/NoPreserve3dWithWillChangeOpacity.svelte';
+import NoPreserve3dWithWillChangeFilter from '../components/trials/NoPreserve3dWithWillChangeFilter.svelte';
+import NoPreserve3dWithBackdropFilter from '../components/trials/NoPreserve3dWithBackdropFilter.svelte';
 
 export interface TrialControls {
   getTrialElement: () => HTMLElement;
@@ -79,6 +95,25 @@ export const allTrials: Trial[] = [
   { name: TrialName.TransformsPreserve3dComplicated, trialType: TransformsPreserve3dComplicated },
   { name: TrialName.TwoContainersPreserve3d, trialType: TwoContainersPreserve3d },
   { name: TrialName.OuterContainerPreserve3d, trialType: OuterContainerPreserve3d },
+  { name: TrialName.NoPreserve3dWithOverflow, trialType: NoPreserve3dWithOverflow },
+  { name: TrialName.NoPreserve3dWithOpacity, trialType: NoPreserve3dWithOpacity },
+  { name: TrialName.NoPreserve3dWithFilter, trialType: NoPreserve3dWithFilter },
+  { name: TrialName.NoPreserve3dWithClipPath, trialType: NoPreserve3dWithClipPath },
+  { name: TrialName.NoPreserve3dWithIsolation, trialType: NoPreserve3dWithIsolation },
+  { name: TrialName.NoPreserve3dWithMaskImage, trialType: NoPreserve3dWithMaskImage },
+  { name: TrialName.NoPreserve3dWithMaskBorderSource, trialType: NoPreserve3dWithMaskBorderSource },
+  { name: TrialName.NoPreserve3dWithMixBlend, trialType: NoPreserve3dWithMixBlend },
+  { name: TrialName.NoPreserve3dWithContainStrict, trialType: NoPreserve3dWithContainStrict },
+  { name: TrialName.NoPreserve3dWithContainContent, trialType: NoPreserve3dWithContainContent },
+  { name: TrialName.NoPreserve3dWithContainPaint, trialType: NoPreserve3dWithContainPaint },
+  { name: TrialName.NoPreserve3dWithContentVisHidden, trialType: NoPreserve3dWithContentVisHidden },
+  { name: TrialName.NoPreserve3dWithContentVisAuto, trialType: NoPreserve3dWithContentVisAuto },
+  {
+    name: TrialName.NoPreserve3dWithWillChangeOpacity,
+    trialType: NoPreserve3dWithWillChangeOpacity,
+  },
+  { name: TrialName.NoPreserve3dWithWillChangeFilter, trialType: NoPreserve3dWithWillChangeFilter },
+  { name: TrialName.NoPreserve3dWithBackdropFilter, trialType: NoPreserve3dWithBackdropFilter },
 ];
 export const trialsByName = new Map<TrialName, Trial>(
   allTrials.map((trial) => [trial.name, trial]),
