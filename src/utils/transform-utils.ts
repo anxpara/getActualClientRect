@@ -22,6 +22,11 @@ export function convertCssTransformOriginToVec3(transformOrigin: string): vec3 {
   );
 }
 
+export function convertCssPerspectiveOriginToVec3(perspectiveOrigin: string): vec3 {
+  const originValues = perspectiveOrigin.split(' ').map((str) => Number.parseFloat(str));
+  return vec3.fromValues(originValues[0], originValues[1], 0);
+}
+
 // prettier-ignore
 const identityTransformArray4x4 = [
   '1', '0', '0', '0',

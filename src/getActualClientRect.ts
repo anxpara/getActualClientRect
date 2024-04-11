@@ -1,5 +1,6 @@
-import { glMatrix, mat4 } from 'gl-matrix';
+import { glMatrix, mat4, vec3 } from 'gl-matrix';
 import {
+  convertCssPerspectiveOriginToVec3,
   convertCssTransformOriginToVec3,
   convertMat4ToCssMatrix3dSubstring,
   getElementTransformMat4,
@@ -96,7 +97,6 @@ function calculateTransformForBasis(
   elementInfos: ElementInfo[],
 ): mat4 {
   let accumulatedTransform = mat4.create();
-  mat4.identity(accumulatedTransform);
 
   // shift the frame of reference to subject's transform origin
   const subjectOriginMat4 = mat4.create();
@@ -105,6 +105,8 @@ function calculateTransformForBasis(
 
   // calculate the transform starting at the basis element and going up to document root
   elementInfos.forEach(({ element, directOffset }, i) => {
+    const parentInfo = i < elementInfos.length ? elementInfos[i + 1] : undefined;
+
     // shift the frame of reference to the current element's transform-origin
     const originMat4 = mat4.create();
     mat4.fromTranslation(originMat4, getElementTransformOriginVec3(element));
@@ -115,17 +117,40 @@ function calculateTransformForBasis(
     const transformMat4 = getElementTransformMat4(element);
     mat4.multiply(accumulatedTransform, transformMat4, accumulatedTransform);
 
+    // unshift the frame of reference from the transform-origin
+    mat4.invert(originMat4, originMat4);
+    mat4.multiply(accumulatedTransform, originMat4, accumulatedTransform);
+
     // translate by the current element's offset from its direct parent
     const offsetMat4 = mat4.create();
     mat4.fromTranslation(offsetMat4, getRectPositionVec3(directOffset!));
     mat4.multiply(accumulatedTransform, offsetMat4, accumulatedTransform);
 
-    // unshift the frame of reference from the transform-origin
-    mat4.invert(originMat4, originMat4);
-    mat4.multiply(accumulatedTransform, originMat4, accumulatedTransform);
+    // apply parent perspective
+    const perspective = getParentPerspective(parentInfo);
+    if (perspective !== 'none') {
+      const parentPerspectiveMat4 = mat4.create();
+
+      // shift the frame of reference to the perspective origin
+      const perspectiveOriginMat4 = mat4.create();
+      mat4.fromTranslation(perspectiveOriginMat4, getParentPerspectiveOrigin(parentInfo!));
+      mat4.multiply(parentPerspectiveMat4, parentPerspectiveMat4, perspectiveOriginMat4);
+
+      // multiply by the equivalent of "transform: perspective(d)"
+      const d = Math.max(parseFloat(perspective), 1);
+      const perspectiveFuncMat4 = mat4.create();
+      perspectiveFuncMat4[11] = -1 / d;
+      mat4.multiply(parentPerspectiveMat4, parentPerspectiveMat4, perspectiveFuncMat4);
+
+      // unshift the frame of reference from the perspective origin
+      mat4.invert(perspectiveOriginMat4, perspectiveOriginMat4);
+      mat4.multiply(parentPerspectiveMat4, parentPerspectiveMat4, perspectiveOriginMat4);
+
+      // pre-multiply the accumulated transform with the parent's perspective
+      mat4.multiply(accumulatedTransform, parentPerspectiveMat4, accumulatedTransform);
+    }
 
     // flatten transform onto xy plane if not preserving 3d
-    const parentInfo = i < elementInfos.length ? elementInfos[i + 1] : undefined;
     if (!doesParentPreserve3d(parentInfo)) {
       accumulatedTransform[2] = 0;
       accumulatedTransform[6] = 0;
@@ -145,6 +170,15 @@ function calculateTransformForBasis(
   mat4.multiply(accumulatedTransform, basisPositionMat4, accumulatedTransform);
 
   return accumulatedTransform;
+}
+
+function getParentPerspective(parentInfo: ElementInfo | undefined): string {
+  if (!parentInfo) return 'none';
+  return parentInfo.computedStyle.perspective;
+}
+
+function getParentPerspectiveOrigin(parentInfo: ElementInfo): vec3 {
+  return convertCssPerspectiveOriginToVec3(parentInfo.computedStyle.perspectiveOrigin);
 }
 
 function doesParentPreserve3d(parentInfo: ElementInfo | undefined): boolean {
