@@ -54,6 +54,10 @@ type ElementInfo = {
  *    useTransformOrigin: return the transform relative to this origin on the element, rather than the element's own origin.
  */
 export function getActualClientRect(element: HTMLElement, options?: ACROptions): ActualClientRect {
+  if (!element) {
+    throw new Error('getActualClientRect: null element');
+  }
+
   glMatrix.setMatrixArrayType(Array);
 
   const inlineTransformOrigin = element.style.transformOrigin;
