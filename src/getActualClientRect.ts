@@ -122,7 +122,7 @@ function calculateTransformForBasis(
 
     // flatten transform onto xy plane if not preserving 3d
     const parentInfo = i < elementInfos.length ? elementInfos[i + 1] : undefined;
-    if (!shouldElementPreserve3d(parentInfo)) {
+    if (!doesParentPreserve3d(parentInfo)) {
       accumulatedTransform[2] = 0;
       accumulatedTransform[6] = 0;
       accumulatedTransform[10] = 1;
@@ -143,9 +143,16 @@ function calculateTransformForBasis(
   return accumulatedTransform;
 }
 
-function shouldElementPreserve3d(parentInfo: ElementInfo | undefined): boolean {
-  if (!parentInfo) return false;
-  return parentInfo.computedStyle.transformStyle === 'preserve-3d';
+function doesParentPreserve3d(parentInfo: ElementInfo | undefined): boolean {
+  if (!parentInfo) {
+    return false;
+  }
+
+  if (getUsedTransformStyle(parentInfo) !== 'preserve-3d') {
+    return false;
+  }
+
+  return true;
 }
 
 // for element and all ancestors, records inline transform value into an ElementInfo
@@ -162,7 +169,9 @@ function disableAllTransforms(element: HTMLElement): ElementInfo[] {
       computedStyle,
     });
     const hasTransform = computedStyle.transform !== 'none';
-    if (hasTransform) currentElement.style.transform = 'matrix(1, 0, 0, 1, 0, 0)';
+    if (hasTransform) {
+      currentElement.style.transform = 'matrix(1, 0, 0, 1, 0, 0)';
+    }
     currentElement = currentElement.parentElement;
   } while (currentElement);
 
@@ -199,4 +208,94 @@ function bakePositionIntoTransform(basis: DOMRect, transformMat4: mat4): void {
   mat4.multiply(transformMat4, positionMat4, transformMat4);
   basis.x = 0;
   basis.y = 0;
+}
+
+// https://www.w3.org/TR/css-transforms-2/#grouping-property-values
+function getUsedTransformStyle(elementInfo: ElementInfo): string {
+  const transformStyle = elementInfo.computedStyle.transformStyle;
+  if (transformStyle === 'flat') {
+    return transformStyle;
+  }
+
+  if (doesElementHaveGroupingProperty(elementInfo)) {
+    return 'flat';
+  }
+
+  return transformStyle;
+}
+
+const NonGroupValuesByGroupProperty: [string, string[]][] = [
+  ['overflow', ['visible']],
+  ['opacity', ['1']],
+  ['filter', ['none']],
+  ['clip-path', ['none']],
+  ['isolation', ['auto']],
+  ['mask-image', ['none', '']],
+  ['-webkit-mask-image', ['none', '']],
+  ['mask-border-source', ['none', '']],
+  ['-webkit-mask-box-image-source', ['none', '']],
+  ['mix-blend-mode', ['normal']],
+];
+
+function doesElementHaveGroupingProperty(elementInfo: ElementInfo): boolean {
+  for (let i = 0; i < NonGroupValuesByGroupProperty.length; i++) {
+    const propertyName = NonGroupValuesByGroupProperty[i][0];
+    const propertyValue = elementInfo.computedStyle.getPropertyValue(propertyName);
+    const nonGroupValues = NonGroupValuesByGroupProperty[i][1];
+
+    if (!nonGroupValues.includes(propertyValue)) {
+      return true;
+    }
+  }
+
+  if (doesElementContainPaint(elementInfo)) {
+    return true;
+  }
+
+  if (doesElementCreateStackingContext(elementInfo)) {
+    return true;
+  }
+
+  return false;
+}
+
+function doesElementContainPaint(elementInfo: ElementInfo): boolean {
+  const containValue = elementInfo.computedStyle.contain;
+  if (['strict', 'content'].includes(containValue)) {
+    return true;
+  }
+  if (containValue.includes('paint')) {
+    return true;
+  }
+
+  const contentVisibility = elementInfo.computedStyle.getPropertyValue('content-visibility');
+  if (['hidden', 'auto'].includes(contentVisibility)) {
+    return true;
+  }
+
+  return false;
+}
+
+// this function avoids redundantly checking properties in NonGroupValuesByGroupProperty,
+// since it's used exclusively for determining if the element should preserve 3d
+function doesElementCreateStackingContext(elementInfo: ElementInfo): boolean {
+  const willChange = elementInfo.computedStyle.willChange;
+  if (willChange.includes('opacity')) {
+    return true;
+  }
+  if (willChange.includes('filter')) {
+    return true;
+  }
+
+  const backdropFilter = elementInfo.computedStyle.getPropertyValue('backdrop-filter');
+  if (!['none', ''].includes(backdropFilter)) {
+    return true;
+  }
+  const webkitBackdropFilter =
+    elementInfo.computedStyle.getPropertyValue('-webkit-backdrop-filter');
+  if (!['none', ''].includes(webkitBackdropFilter)) {
+    return true;
+  }
+
+  return false;
 }
