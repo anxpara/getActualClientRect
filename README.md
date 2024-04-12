@@ -110,6 +110,7 @@ export type ACROptions = {
     - Safari v17.4 / Webkit -- will-change: filter | opacity
     - (Properties not yet supported by particular browsers omitted from their respective lists)
 - gACR performance has not yet been profiled
+- SVGs not yet officially supported, but might happen to work in certain scenarios
 
 # Contribute
 
