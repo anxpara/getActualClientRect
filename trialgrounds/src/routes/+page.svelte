@@ -69,5 +69,6 @@
 
   .matcher-container {
     position: fixed;
+    transform: translateZ(1px);
   }
 </style>
