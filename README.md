@@ -109,8 +109,7 @@ export type ACROptions = {
     - Firefox v124 / Gecko -- will-change: filter
     - Safari v17.4 / Webkit -- will-change: filter | opacity
     - (Properties not yet supported by particular browsers omitted from their respective lists)
-- perspective properties are not yet supported
-- performance has not yet been profiled
+- gACR performance has not yet been profiled
 
 # Contribute
 
