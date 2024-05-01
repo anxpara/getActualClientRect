@@ -2,13 +2,17 @@
   font-family: 'Inconsolata';
   src: url('/fonts/Inconsolata.ttf') format('truetype');
 }
+@font-face {
+  font-family: 'Rubik';
+  src: url('/fonts/Rubik.ttf') format('truetype');
+}
 
 html,
 body {
+  scrollbar-gutter: stable;
+
   margin: 0;
   padding: 0;
-  width: 100vw;
-  height: 100svh;
 }
 
 body {
@@ -37,4 +41,28 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+// scrollbars
+
+// firefox
+* {
+  scrollbar-width: thin;
+  scrollbar-color: coral #12415a;
+}
+
+// chrome, edge, and safari
+* ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+* ::-webkit-scrollbar-track {
+  background: #12415a;
+}
+
+* ::-webkit-scrollbar-thumb {
+  background-color: coral;
+  border-radius: 8px;
+  border: none;
 }
