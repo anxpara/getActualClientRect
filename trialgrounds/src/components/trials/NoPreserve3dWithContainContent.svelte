@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Trial } from '$lib/trials';
+  import type { Trial } from '$lib/trials/trials';
   import type { ACROptions } from 'actual-client-rect';
 
   export let trial: Trial;

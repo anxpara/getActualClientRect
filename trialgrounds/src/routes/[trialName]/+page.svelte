@@ -2,8 +2,8 @@
   import { page } from '$app/stores';
   import { onMount, tick } from 'svelte';
   import Matcher from '../../components/Matcher.svelte';
-  import { trialsByName } from '../../lib/trials';
-  import type { TrialName } from '../../lib/trialNames';
+  import { trialsByName } from '$lib/trials/trials';
+  import type { TrialName } from '$lib/trials/trialNames';
 
   export let data;
   $: matchOnce = data.matchOnce;

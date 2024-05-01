@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { allTrials, getTrials, type Trial } from '../lib/trials';
+  import { allTrials, getTrials, type Trial } from '../lib/trials/trials';
   import Matcher from '../components/Matcher.svelte';
   import { onMount, tick } from 'svelte';
   import { page } from '$app/stores';

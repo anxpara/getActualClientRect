@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ACROptions } from 'actual-client-rect';
-  import type { Trial } from '$lib/trials';
+  import type { Trial } from '$lib/trials/trials';
 
   export let trial: Trial;
 

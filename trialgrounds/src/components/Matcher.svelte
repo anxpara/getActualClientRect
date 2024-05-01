@@ -2,7 +2,7 @@
   import anime from 'animejs';
   import { getActualClientRect } from 'actual-client-rect';
   import { onDestroy, onMount, tick } from 'svelte';
-  import type { Trial } from '$lib/trials';
+  import type { Trial } from '$lib/trials/trials';
 
   export let element: HTMLElement | undefined;
   export let trial: Trial | undefined;
