@@ -1,64 +1,50 @@
 <script lang="ts">
   import '../app.scss';
+  import { derived, writable } from 'svelte/store';
+  import { getUrlForOptions, type Options } from '$lib/options';
+  import { setContext } from 'svelte';
+  import { browser } from '$app/environment';
+  import { page } from '$app/stores';
+  import { goto } from '$app/navigation';
+  import MainMenu from '../components/menus/MainMenu.svelte';
 
   export let data;
+
+  const options = writable<Options>(data.options);
+  setContext('options', options);
+
+  const pageUrl = derived(page, (page) => {
+    return page.url;
+  });
+  setContext('pageUrl', pageUrl);
+
+  if (browser) {
+    window.addEventListener('popstate', handlePopstate);
+    options.subscribe(handleOptionsChanged);
+  }
+
+  function handlePopstate(): void {
+    setUrlToOptions($options);
+  }
+
+  function handleOptionsChanged(newOptions: Options): void {
+    setUrlToOptions(newOptions);
+  }
+
+  function setUrlToOptions(options: Options): void {
+    if (!browser) return;
+
+    const currentParams = $page.url.searchParams;
+    const nextUrl = getUrlForOptions(options, currentParams);
+
+    setTimeout(() => {
+      goto(nextUrl, { replaceState: true, keepFocus: true });
+    }, 1);
+  }
 </script>
 
-{#if !data.forPlaywright}
-  <nav title="trial collections and presets">
-    <h1>collections & presets</h1>
-    <ul>
-      <li>
-        <a data-sveltekit-reload href="/"> all </a>
-      </li>
-      <li>
-        <a
-          data-sveltekit-reload
-          href="/?trialNames=control,padded-parent-rotated,scroll-in-rotate&showUntransformedRect&showUntransformedContainers"
-        >
-          offset rotations collection
-        </a>
-      </li>
-      <li>
-        <a data-sveltekit-replacestate href="/?showUntransformedRect">show untransformed rects</a>
-      </li>
-      <li>
-        <a data-sveltekit-replacestate href="/?showUntransformedRect&showUntransformedContainers">
-          & untransformed containers
-        </a>
-      </li>
-      <li>
-        <a data-sveltekit-replacestate href="/"> clear options </a>
-      </li>
-    </ul>
-  </nav>
+{#if !$options.hideUI}
+  <MainMenu />
 {/if}
 
 <slot />
-
-<style lang="scss">
-  nav {
-    position: absolute;
-    width: 100vw;
-    height: 13em;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    color: coral;
-
-    ul {
-      padding-left: 1em;
-    }
-  }
-
-  a {
-    text-underline-offset: 0.2em;
-    color: coral;
-  }
-
-  a:visited {
-    color: coral;
-  }
-</style>
