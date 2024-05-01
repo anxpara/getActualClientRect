@@ -14,8 +14,11 @@
 
   $: trial = trialsByName.get($page.params.trialName as TrialName)!;
 
+  let trialLoaded = false;
+
   onMount(async () => {
     await tick();
+    trialLoaded = true;
 
     if (!trial?.trialComponent) {
       throw new Error('trial component failed to load');
@@ -28,26 +31,28 @@
     <svelte:component this={trial.trialType} bind:this={trial.trialComponent} {trial} />
   {/if}
 </div>
-<div class="matcher-container">
-  <Matcher element={trial.trialComponent?.getTrialElement()} {trial} {matchOnce} />
-  {#if $options.showBasis}
-    <Matcher
-      element={trial.trialComponent?.getTrialElement()}
-      trial={undefined}
-      {matchOnce}
-      isBasis={true}
-    />
-    {#each trial.trialComponent?.getContainers() ?? [] as container}
+{#if trialLoaded}
+  <div class="matcher-container">
+    <Matcher element={trial.trialComponent?.getTrialElement()} {trial} {matchOnce} />
+    {#if $options.showBasis}
       <Matcher
-        element={container}
+        element={trial.trialComponent?.getTrialElement()}
         trial={undefined}
         {matchOnce}
         isBasis={true}
-        isContainer={true}
       />
-    {/each}
-  {/if}
-</div>
+      {#each trial.trialComponent?.getContainers() ?? [] as container}
+        <Matcher
+          element={container}
+          trial={undefined}
+          {matchOnce}
+          isBasis={true}
+          isContainer={true}
+        />
+      {/each}
+    {/if}
+  </div>
+{/if}
 
 <style lang="scss">
   .lone-trial-container {
