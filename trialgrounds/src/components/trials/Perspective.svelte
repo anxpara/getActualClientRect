@@ -27,7 +27,7 @@
     perspective: 200px;
   }
 
-  .perspective {
+  .trial-element {
     transform: rotateX(-45deg) rotateY(10deg);
   }
 </style>

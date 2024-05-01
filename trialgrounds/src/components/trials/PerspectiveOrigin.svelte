@@ -28,7 +28,7 @@
     perspective-origin: bottom left;
   }
 
-  .perspective-origin {
+  .trial-element {
     transform: rotateX(-45deg) rotateY(10deg);
   }
 </style>

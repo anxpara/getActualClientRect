@@ -21,7 +21,7 @@
 <div bind:this={trialElement} class="trial-element">{trial.name}</div>
 
 <style lang="scss">
-  .perspective-func {
+  .trial-element {
     transform: perspective(200px) rotateX(-45deg) rotateY(10deg);
   }
 </style>
