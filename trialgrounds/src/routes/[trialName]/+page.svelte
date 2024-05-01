@@ -1,12 +1,16 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import { onMount, tick } from 'svelte';
+  import { getContext, onMount, tick } from 'svelte';
   import Matcher from '../../components/Matcher.svelte';
   import { trialsByName } from '$lib/trials/trials';
   import type { TrialName } from '$lib/trials/trialNames';
+  import type { Writable } from 'svelte/store';
+  import type { Options } from '$lib/options';
 
   export let data;
-  $: matchOnce = data.matchOnce;
+
+  const options = getContext<Writable<Options>>('options');
+  $: matchOnce = $options.matchOnce;
 
   $: trial = trialsByName.get($page.params.trialName as TrialName)!;
 
@@ -26,25 +30,33 @@
 </div>
 <div class="matcher-container">
   <Matcher element={trial.trialComponent?.getTrialElement()} {trial} {matchOnce} />
-  {#if data.showUntransformedRect}
+  {#if $options.showBasis}
     <Matcher
       element={trial.trialComponent?.getTrialElement()}
       trial={undefined}
-      untransformed={true}
       {matchOnce}
+      isBasis={true}
     />
-  {/if}
-  {#if data.showUntransformedContainers}
     {#each trial.trialComponent?.getContainers() ?? [] as container}
-      <Matcher element={container} trial={undefined} untransformed={true} {matchOnce} />
+      <Matcher
+        element={container}
+        trial={undefined}
+        {matchOnce}
+        isBasis={true}
+        isContainer={true}
+      />
     {/each}
   {/if}
 </div>
 
 <style lang="scss">
   .lone-trial-container {
+    position: absolute;
+    top: 0;
+
     width: 100%;
-    height: 100%;
+    height: 100svh;
+
     display: grid;
     justify-content: center;
     align-items: center;

@@ -1,13 +1,18 @@
 <script lang="ts">
   import { allTrials, getTrials, type Trial } from '../lib/trials/trials';
   import Matcher from '../components/Matcher.svelte';
-  import { onMount, tick } from 'svelte';
+  import { getContext, onMount, tick } from 'svelte';
   import { page } from '$app/stores';
+  import type { Writable } from 'svelte/store';
+  import type { Options } from '$lib/options';
 
   export let data;
-  $: matchOnce = data.matchOnce;
 
-  const trials = getCurrentTrials(data.trialNames);
+  const options = getContext<Writable<Options>>('options');
+
+  $: matchOnce = $options.matchOnce;
+
+  $: trials = getCurrentTrials(data.trialNames);
   function getCurrentTrials(trialNames: string[]): Trial[] {
     return trialNames.length ? getTrials(trialNames) : allTrials;
   }
@@ -34,17 +39,21 @@
       <a href="/{trial.name}{$page.url.search}">
         <Matcher element={trial.trialComponent?.getTrialElement()} {trial} {matchOnce} />
       </a>
-      {#if data.showUntransformedRect}
+      {#if $options.showBasis}
         <Matcher
           element={trial.trialComponent?.getTrialElement()}
           trial={undefined}
-          untransformed={true}
+          isBasis={true}
           {matchOnce}
         />
-      {/if}
-      {#if data.showUntransformedContainers}
         {#each trial.trialComponent?.getContainers() ?? [] as container}
-          <Matcher element={container} trial={undefined} untransformed={true} {matchOnce} />
+          <Matcher
+            element={container}
+            trial={undefined}
+            {matchOnce}
+            isBasis={true}
+            isContainer={true}
+          />
         {/each}
       {/if}
     {/each}

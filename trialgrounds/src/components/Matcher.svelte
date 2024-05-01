@@ -6,8 +6,9 @@
 
   export let element: HTMLElement | undefined;
   export let trial: Trial | undefined;
-  export let untransformed = false;
   export let matchOnce = false;
+  export let isBasis = false;
+  export let isContainer = false;
   let matcher: HTMLElement;
 
   let matchInterval: NodeJS.Timeout | undefined = undefined;
@@ -32,7 +33,7 @@
 
     const acr = getActualClientRect(element, trial?.trialComponent?.getACROptions());
 
-    if (untransformed) {
+    if (isBasis) {
       acr.matrix3d = '';
     }
 
@@ -47,15 +48,9 @@
   }
 </script>
 
-<div bind:this={matcher} class="matcher" class:untransformed />
+<div bind:this={matcher} class="matcher" class:isBasis class:isContainer />
 
 <style lang="scss">
-  .untransformed {
-    outline-style: dashed;
-    color: coral;
-    pointer-events: none;
-  }
-
   .matcher {
     position: absolute;
     font-size: 2em;
@@ -67,5 +62,14 @@
     outline: solid 2px;
 
     color: green;
+  }
+
+  .isBasis {
+    outline-style: dashed;
+    pointer-events: none;
+  }
+
+  .isContainer {
+    color: purple;
   }
 </style>
