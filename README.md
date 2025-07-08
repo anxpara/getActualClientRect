@@ -100,7 +100,27 @@ export type ACROptions = {
 
 ![Example.svelte render](https://raw.githubusercontent.com/anxpara/getActualClientRect/75e76e7594f4fa3d3ead27e8272b619fdacaff1f/trialgrounds/static/images/example.png)
 
-### Limitations
+## Testing
+
+All trial scenarios are defined in the /trialgrounds directory
+
+* The mobile safari configuration for Playwright has a decent number of false failures; any such trials are effectively disabled and tested manually.
+* The Playwright screenshots in the repo are created on Windows, and Playwright might not use the right configurations if run from another environment.
+
+```
+$ cd trialgrounds
+$ npm run link
+$ npm run test
+```
+
+## Roadmap
+
+I will eventually get around to the following:
+
+* optimization
+* maybe SVGs, canvases, and 3D libraries
+
+## Limitations
 
 - getActualClientRect will not attempt to match, emulate, or mitigate bugs in rendering engines
   - [stackoverflow: -webkit-transform-style: preserve-3d not working](https://stackoverflow.com/questions/11664255/webkit-transform-style-preserve-3d-not-working)
@@ -109,15 +129,12 @@ export type ACROptions = {
     - Firefox v124 / Gecko -- will-change: filter
     - Safari v17.4 / Webkit -- will-change: filter | opacity
     - (Properties not yet supported by particular browsers omitted from their respective lists)
-- gACR performance has not yet been profiled
-- SVGs not yet officially supported, but might happen to work in certain scenarios
 
 # Contribute
 
 All contributions are greatly appreciated!
 
-- Feedback, feature requests, and help requests can be posted to the [Projectrix Discord](https://discord.gg/YxVAUFqW4e)
 - If you find a bug, please [file an issue](https://github.com/anxpara/getActualClientRect/issues)
-- [Join my Patreon](https://www.patreon.com/anxpara)
+- Feedback and help requests can be posted to the [Projectrix Discord](https://discord.gg/YxVAUFqW4e)
 
 <3 anxpara
