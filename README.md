@@ -115,7 +115,7 @@ $ npm run test
 
 ## Roadmap
 
-I will eventually get around to the following:
+Development is paused, and is unlikely to resume anytime soon, if ever. This was the roadmap prior to the pause:
 
 * optimization
 * maybe SVGs, canvases, and 3D libraries
@@ -129,12 +129,5 @@ I will eventually get around to the following:
     - Firefox v124 / Gecko -- will-change: filter
     - Safari v17.4 / Webkit -- will-change: filter | opacity
     - (Properties not yet supported by particular browsers omitted from their respective lists)
-
-# Contribute
-
-All contributions are greatly appreciated!
-
-- If you find a bug, please [file an issue](https://github.com/anxpara/getActualClientRect/issues)
-- Feedback and help requests can be posted to the [Projectrix Discord](https://discord.gg/YxVAUFqW4e)
 
 <3 anxpara
