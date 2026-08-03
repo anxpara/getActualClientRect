@@ -98,7 +98,7 @@ export type ACROptions = {
 </style>
 ```
 
-![Example.svelte render](https://raw.githubusercontent.com/anxpara/getActualClientRect/75e76e7594f4fa3d3ead27e8272b619fdacaff1f/trialgrounds/static/images/example.png)
+![Example.svelte render](https://raw.githubusercontent.com/serranocirrus/getActualClientRect/75e76e7594f4fa3d3ead27e8272b619fdacaff1f/trialgrounds/static/images/example.png)
 
 ## Testing
 
@@ -129,5 +129,3 @@ Development is paused, and is unlikely to resume anytime soon, if ever. This was
     - Firefox v124 / Gecko -- will-change: filter
     - Safari v17.4 / Webkit -- will-change: filter | opacity
     - (Properties not yet supported by particular browsers omitted from their respective lists)
-
-<3 anxpara
